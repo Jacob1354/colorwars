@@ -1,0 +1,51 @@
+Étapes :
+    1. Identifier besoins clients
+    2. Découper le projet en sprints
+    3. Effectuer les sprints !
+
+Besoins :
+    1. Avoir un menu avec
+        a. Choix de difficulté
+        b. Choix du nombre de joueurs (max 4)
+        c. Bouton play
+        d. Bouton quit
+        e. Musique
+        f. Sons des bouttons
+        g. Choix de la taille du plateau
+        h. Possibilité d'être utilisé avec la souris ou les flèches
+        j. Choix du nombre de bots
+
+    2. Avoir un gameplay qui permet
+        a. D'être joué à plusieurs joueurs
+        b. D'inclure des bots
+        c. D'être joué avec la souris
+        d. A des sons
+
+Gameplay :
+    - Chaque joueur commence par placer un cercle avec 3 points dans une case libre
+    - Chaque joueur occupera donc un nombre x de case tout au long du eu
+    - Chaque case occupée possède une quantité de points
+    - Une case a un maximum de 3 points
+    - Si une case arrive à quatre points, elle explose en envoyant un point
+      sur chaque case collée à celle-ci (diagonales excluses). Chaques cases
+      recevant un point appartient désormais au joueur à qui appartenait la
+      case ayant explosée
+    - À tour de rôle, les joueurs ajoutent un point à une de leurs cases.
+    - La partie se terminent lorsqu'il ne reste que les cases d'un joueur
+
+Technologies :
+
+
+
+Bots :
+
+
+Sprints :
+    1. Menu qui permet de jouer et de quitter, le jeu est vide, enter pour
+       sortir. 
+    2. Implémentation du jeu : case 
+
+
+
+
+
