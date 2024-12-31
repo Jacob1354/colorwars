@@ -26,8 +26,8 @@ jobs:
 
       - name: Setup
         run: |
-          apt-get update
-          apt-get -y install gcc make libsdl2-2.0-0 libsdl2-image-2.0-0-dev
+          sudo apt-get update
+          sudo apt-get -y install gcc make libsdl2-2.0-0 libsdl2-image-2.0-0-dev
           
       - name: Build Project
         run: make
