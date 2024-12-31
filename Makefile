@@ -20,7 +20,7 @@ all: build
 build: $(DIRS) $(EXEC)
 
 $(DIRS):
-	mkdir $(DIRS)
+	mkdir -p $(DIRS)
 
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $(EXEC)
