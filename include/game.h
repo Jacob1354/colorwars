@@ -7,7 +7,10 @@
 // --------------- //
 
 enum gamestate {
-}
+    GAME_STATE_PLAYING,
+    GAME_STATE_GAME_OVER,
+    GAME_STATE_QUIT
+};
 
 enum player {
     NONE,
@@ -15,14 +18,14 @@ enum player {
     CYAN,
     GREEN,
     YELLOW
-}
+};
 
 struct box {
     int x;
     int y;
     enum player;
     int points;
-}
+};
 
 struct game {
     enum gamestate gamestate;
@@ -32,7 +35,7 @@ struct game {
     enum player player_turn;
     struct box** boxes;
     SDL_Renderer* renderer;
-}
+};
 
 
 // --------- //

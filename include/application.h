@@ -4,6 +4,7 @@
 #include "sdl2.h"
 #include "constants.h"
 #include "menu.h"
+#include "game.h"
 
 // --------------- //
 // Data structures //
@@ -33,7 +34,7 @@ struct application {
  *
  * @return  A pointer to a new application, NULL if there was an error
  */
-struct application *application_initialize();
+struct application* application_initialize();
 
 /**
  * Start running the application
