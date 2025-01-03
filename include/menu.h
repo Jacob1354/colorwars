@@ -10,6 +10,7 @@
 // --------------- //
 
 enum menu_state {
+    MENU_STATE_NONE,
     MENU_STATE_PLAY,
     MENU_STATE_QUIT,
     MENU_STATE_PLAYERS_UP,
@@ -20,8 +21,8 @@ enum menu_state {
 
 struct menu {
     enum menu_state state;
-    int nb_players;
-    int nb_bots;
+    int players_nb;
+    int bots_nb;
     struct sprite* sprites;
     SDL_Renderer* renderer;
 };

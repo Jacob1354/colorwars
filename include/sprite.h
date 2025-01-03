@@ -9,6 +9,7 @@
 
 
 struct sprite {
+    int id;
     struct spritesheet* spritesheet;
     int sprite_nb;
     int x;

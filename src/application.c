@@ -30,11 +30,11 @@ struct application* init_app(struct application* app) {
         return NULL;
     }
     app->renderer = SDL_CreateRenderer(app->window, -1, 0);
-    app->menu = NULL;/*menu_init();
+    app->menu = menu_init(app->renderer);
     if(app->menu == NULL) {
         printf(ERR_MSG_ALLOC, "app menu");
         return NULL;
-    }*/
+    }
     app->game = NULL;
 }
 
