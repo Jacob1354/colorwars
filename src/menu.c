@@ -27,12 +27,13 @@ struct menu* menu_init(SDL_Renderer* renderer) {
 
 void menu_fill(struct menu* menu, SDL_Renderer* renderer) {
     if(menu != NULL && renderer != NULL) {
-       menu_gen_sprites(menu, renderer);
-       if(menu->sprites != NULL) {
-           menu->renderer = renderer;
-           menu->players_nb = DEFAULT_PLAYERS_NB;
-           menu->bots_nb = DEFAULT_BOTS_NB;
-           menu->state = MENU_STATE_NONE;
+        menu->sprite_nb = 0;
+        menu_gen_sprites(menu, renderer);
+        if(menu->sprites != NULL) {
+            menu->renderer = renderer;
+            menu->players_nb = DEFAULT_PLAYERS_NB;
+            menu->bots_nb = DEFAULT_BOTS_NB;
+            menu->state = MENU_STATE_NONE;
        }
     }
 }
@@ -45,4 +46,10 @@ void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer) {
 void menu_run(struct menu* menu);
 
 
-void menu_delete(struct menu* menu);
+void menu_delete(struct menu* menu) {
+    int i;
+    if(menu->sprites != NULL)
+        for(i=0; i < menu->sprite_nb; i++)
+            free(menu->sprites[i]);
+    free(menu);
+}

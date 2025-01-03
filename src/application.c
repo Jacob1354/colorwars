@@ -44,6 +44,7 @@ void application_run(struct application *app) {
 
 
 void application_shut_down(struct application *app) {
+    menu_delete(app->menu);
     SDL_DestroyRenderer(app->renderer);
     SDL_DestroyWindow(app->window);
     IMG_Quit();
