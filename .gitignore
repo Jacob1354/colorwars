@@ -1,4 +1,4 @@
 gimp
 obj
 include/*.d
-./colorwars
+colorwars
