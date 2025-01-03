@@ -1,4 +1,4 @@
-#include "spritesheet.h"
+#include "../include/spritesheet.h"
 
 SDL_Surface* surface_load(const char* filename); 
 SDL_Texture* texture_load(SDL_Surface* surface, SDL_Renderer* renderer, const char* filename);
