@@ -16,7 +16,7 @@ enum menu_state {
     MENU_STATE_PLAYERS_DOWN,
     MENU_STATE_BOTS_UP,
     MENU_STATE_BOTS_DOWN
-}
+};
 
 struct menu {
     enum menu_state state;
