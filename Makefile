@@ -23,7 +23,7 @@ $(DIRS):
 	mkdir -p $(DIRS)
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $(EXEC)
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(EXEC)
 
 $(OBJDIRS)/%.o: $(SRCDIRS)/%.c 
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
