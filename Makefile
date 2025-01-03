@@ -10,7 +10,7 @@ OBJS = $(patsubst $(SRCDIRS)/%.c, $(OBJDIRS)/%.o, $(wildcard $(SRCDIRS)/*.c))
 
 CC = gcc
 CFLAGS = -Wall -Wextra -O0 -std=c99 `sdl2-config --cflags`
-LDFLAGS = `sdl2-config --libs`
+LDFLAGS = `sdl2-config --libs` -lSDL2_image
 DEPFLAGS = -MT $@ -MMD -MP -MF $(INCDIRS)/$*.d
 
 
