@@ -11,9 +11,11 @@
 struct sprite {
     int id;
     struct spritesheet* spritesheet;
-    int sprite_nb;
+    int sprite_pos;
     int x;
     int y;
+    unsigned int w;
+    unsigned int h;
 };
 
 
@@ -25,12 +27,12 @@ struct sprite {
  * Creates a new sprite
  *
  * @param spritesheet The spritesheet from where to get it
- * @param sprite_nb The position of the sprite in the spritesheet
+ * @param sprite_pos The position of the sprite in the spritesheet (begins at 0)
  * @param x X postion of the top left corner of the sprite in the window
  * @param y Y postion of the top left corner of the sprite in the window
 */
 struct sprite* sprite_init(struct spritesheet* spritesheet,
-        int sprite_nb, int x, int y);
+        int sprite_pos, int x, int y, unsigned int w, unsigned int h);
 
 /*
  * Renders a sprite on the renderer of it's spritesheet
