@@ -19,7 +19,7 @@
 
 
 //Menu constants
-
+#define MENU_SPRITE_QTT 12
 
 //Menu macros
 

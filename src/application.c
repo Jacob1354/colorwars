@@ -39,7 +39,15 @@ struct application* init_app(struct application* app) {
 }
 
 void application_run(struct application *app) {
-    SDL_Delay(5000);
+    SDL_Event e;
+    while(app->state != APPLICATION_STATE_QUIT) {
+        while(SDL_PollEvent(&e) != 0) {
+            if(e.type == SDL_QUIT)
+                app->state = APPLICATION_STATE_QUIT;
+        }
+        if(app->state == APPLICATION_STATE_MENU)
+            menu_run(app->menu);
+    }
 }
 
 

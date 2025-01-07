@@ -23,7 +23,8 @@ struct menu {
     enum menu_state state;
     int players_nb;
     int bots_nb;
-    struct sprite* sprites;
+    struct sprite** sprites;
+    int sprite_nb;
     SDL_Renderer* renderer;
 };
 
