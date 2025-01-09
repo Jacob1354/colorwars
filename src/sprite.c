@@ -3,7 +3,7 @@
 #include "../include/constants.h"
 
 
-struct sprite* sprite_init(struct spritesheet* spritesheet,
+struct sprite* sprite_create(struct spritesheet* spritesheet,
         int sprite_pos, int x, int y, unsigned int w, unsigned int h) {
     struct sprite* sprite = malloc(sizeof(struct sprite));
     if(sprite == NULL) {
@@ -25,12 +25,13 @@ struct sprite* sprite_init(struct spritesheet* spritesheet,
 
 
 void sprite_render(struct sprite* sprite) {
-    spritesheet_render(sprite->spritesheet,
-            sprite->x,
-            sprite->y,
-            0xff,
-            sprite->sprite_pos
-            );
+    if(sprite != NULL)
+        spritesheet_render(sprite->spritesheet,
+                sprite->x,
+                sprite->y,
+                255,
+                sprite->sprite_pos
+                );
 }
 
 
