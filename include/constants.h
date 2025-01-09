@@ -3,8 +3,8 @@
 
 //General constants
 #define ERR_MSG_ALLOC "Unable to alloc memory for %s\n"
-#define WND_W 1000
-#define WND_H 740
+#define WND_W 800
+#define WND_H 680
 
 #define DEFAULT_PLAYERS_NB 2
 #define DEFAULT_BOTS_NB 0

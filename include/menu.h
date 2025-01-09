@@ -19,6 +19,7 @@ enum menu_state {
     MENU_STATE_BOTS_DOWN
 };
 
+
 struct menu {
     enum menu_state state;
     int players_nb;

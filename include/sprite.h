@@ -31,7 +31,7 @@ struct sprite {
  * @param x X postion of the top left corner of the sprite in the window
  * @param y Y postion of the top left corner of the sprite in the window
 */
-struct sprite* sprite_init(struct spritesheet* spritesheet,
+struct sprite* sprite_create(struct spritesheet* spritesheet,
         int sprite_pos, int x, int y, unsigned int w, unsigned int h);
 
 /*
