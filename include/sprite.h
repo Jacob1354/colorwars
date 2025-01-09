@@ -12,10 +12,7 @@ struct sprite {
     int id;
     struct spritesheet* spritesheet;
     int sprite_pos;
-    int x;
-    int y;
-    unsigned int w;
-    unsigned int h;
+    SDL_Rect box;
 };
 
 

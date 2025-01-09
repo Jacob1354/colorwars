@@ -16,10 +16,10 @@ struct sprite* sprite_create(struct spritesheet* spritesheet,
     }
     sprite->spritesheet = spritesheet;
     sprite->sprite_pos = sprite_pos;
-    sprite->x = x;
-    sprite->y = y;
-    sprite->w = w;
-    sprite->h = h;
+    sprite->box.x = x;
+    sprite->box.y = y;
+    sprite->box.w = w;
+    sprite->box.h = h;
     return sprite;
 }
 
@@ -27,8 +27,8 @@ struct sprite* sprite_create(struct spritesheet* spritesheet,
 void sprite_render(struct sprite* sprite) {
     if(sprite != NULL)
         spritesheet_render(sprite->spritesheet,
-                sprite->x,
-                sprite->y,
+                sprite->box.x,
+                sprite->box.y,
                 255,
                 sprite->sprite_pos
                 );
