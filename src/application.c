@@ -36,6 +36,7 @@ struct application* init_app(struct application* app) {
         return NULL;
     }
     app->game = NULL;
+    return app;
 }
 
 void application_run(struct application *app) {
