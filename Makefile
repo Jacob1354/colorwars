@@ -1,11 +1,14 @@
 OBJDIRS = obj
+DBG_OBJDIRS = dbg_objs
 SRCDIRS = src
 INCDIRS = include
 EXEC = colorwars
+DBG_EXEC = dbg_colorwars
 
 
-DIRS = $(OBJDIRS) $(SRCDIRS) $(INCDIRS)
+DIRS = $(OBJDIRS) $(SRCDIRS) $(INCDIRS) $(DBG_OBJDIRS)
 OBJS = $(patsubst $(SRCDIRS)/%.c, $(OBJDIRS)/%.o, $(wildcard $(SRCDIRS)/*.c))
+DBG_OBJS = $(patsubst $(SRCDIRS)/%.c, $(DBG_OBJDIRS)/%.o, $(wildcard $(SRCDIRS)/*.c))
 
 
 CC = gcc
@@ -19,6 +22,11 @@ all: build
 
 build: $(DIRS) $(EXEC)
 
+
+debug: CFLAGS += -g 
+debug: $(DIRS) $(DBG_EXEC)
+
+
 $(DIRS):
 	mkdir -p $(DIRS)
 
@@ -28,10 +36,17 @@ $(EXEC): $(OBJS)
 $(OBJDIRS)/%.o: $(SRCDIRS)/%.c 
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
+$(DBG_EXEC): $(DBG_OBJS)
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $(DBG_EXEC)	
+
+$(DBG_OBJDIRS)/%.o: $(SRCDIRS)/%.c 
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+
 -include $(wildcard $(INCDIRS)/*d)
 
 clean:
-	@rm -f $(wildcard $(INCDIRS)/*.d) $(wildcard $(OBJDIRS)/*.o) $(EXEC)
+	@rm -f $(wildcard $(INCDIRS)/*.d) $(wildcard $(OBJDIRS)/*.o) $(wildcard $(DBG_OBJDIRS)/*.o) $(EXEC)
 	
 
-.PHONY: build clean
+.PHONY: build debug clean
