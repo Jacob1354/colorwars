@@ -17,12 +17,15 @@ const char MENU_SPRITES_PATHS[9][100] = {
     "./assets/menu/digits.png" 
 };
 
+//Here's the order for the coordinates :
+//bg, title, play, quit, players_txt, bots_txt, up_arrow_player, up_arrow_bot,
+//down_arrow_player, down_arrow_bot, digits_player, digits_bot 
 const int MENU_SPRITES_X[MENU_SPRITE_QTT] = { 
     0, 28, 216, 417, 160, 193, 333, 333, 333, 333, 408, 408
 };
 
 const int MENU_SPRITES_Y[MENU_SPRITE_QTT] = { 
-    1, 152, 319, 315, 427, 540, 482, 593, 458, 569, 482, 593
+    1, 152, 319, 315, 427, 540, 450, 561, 490, 601, 482, 593
 };
 
 
