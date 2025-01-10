@@ -142,6 +142,15 @@ int path_nb(enum sprite_id id) {
     return path_nb;
 }
 
+int get_sprite_pos(struct menu* menu, enum sprite_id id) {
+    int sprite_pos = 0;
+    if(id == SPRITE_PLAYERS_DIGIT)
+        sprite_pos = menu->players_nb;
+    else if (id == SPRITE_BOTS_DIGIT)
+        sprite_pos = menu->bots_nb;
+    return sprite_pos;
+}
+
 //Menu run
 void menu_run(struct menu* menu) {
     SDL_Event e;
