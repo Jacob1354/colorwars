@@ -49,6 +49,9 @@ enum sprite_pos {
 
 //General fcts
 void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer);
+int find_sprite_cols(enum sprite_pos sprite);
+int need_new_spritesheet(enum sprite_pos sprite);
+int path_nb(enum sprite_pos sprite);
 
 //Menu init fcts
 void menu_fill(struct menu* menu, SDL_Renderer* renderer);
@@ -93,29 +96,49 @@ void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer) {
         int i;
         struct spritesheet* ss;
         for(i = 0; i < menu->sprite_nb; i++) {
-            if(i == SPRITE_PLAYERS_DIGIT) {
-                ss = spritesheet_create(MENU_SPRITES_PATHS[i-2], 1, 5, 5, renderer);
-                get_png_dimensions(MENU_SPRITES_PATHS[i-2], dims);
-            } else if(i == SPRITE_BOTS_DIGIT) {
-                get_png_dimensions(MENU_SPRITES_PATHS[i-3], dims);
-            }
-            else if(i ==  SPRITE_BOTS_ARROW_UP)
-                get_png_dimensions(MENU_SPRITES_PATHS[i-1], dims);
-            else if(i == SPRITE_PLAYER_ARROW_DOWN) {
-                ss = spritesheet_create(MENU_SPRITES_PATHS[i-1], 1, 1, 1, renderer);
-                get_png_dimensions(MENU_SPRITES_PATHS[i-1], dims);
-            }
-            else if(i == SPRITE_BOTS_ARROW_DOWN) {
-                get_png_dimensions(MENU_SPRITES_PATHS[i-2], dims);
-            }
-            else {
-                ss = spritesheet_create(MENU_SPRITES_PATHS[i], 1, 1, 1, renderer);
-                get_png_dimensions(MENU_SPRITES_PATHS[i], dims);
-            }
+            int sprite_cols = find_sprite_cols(i);
+            int sprite_rows = 1;
+            if(need_new_spritesheet(i))
+                ss = spritesheet_create(MENU_SPRITES_PATHS[path_nb(i)],
+                        sprite_rows, sprite_cols, sprite_cols * sprite_rows,
+                        renderer);
+            get_png_dimensions(MENU_SPRITES_PATHS[path_nb(i)], dims);
             menu->sprites[i] = sprite_create(ss, 0, MENU_SPRITES_X[i], 
                     MENU_SPRITES_Y[i], dims[0], dims[1]);
-        }
+       }
     }
+}
+
+int find_sprite_cols(enum sprite_pos sprite) {
+    int sprite_qtt = 1;
+    if(sprite == SPRITE_PLAY || sprite == SPRITE_QUIT ||
+            (sprite >= SPRITE_PLAYERS_ARROW_UP
+             && sprite <= SPRITE_BOTS_ARROW_DOWN))
+        sprite_qtt = 2;
+    else if(sprite == SPRITE_PLAYERS_DIGIT
+            || sprite == SPRITE_BOTS_DIGIT)
+        sprite_qtt = 5;
+    return sprite_qtt;
+        
+}
+
+int need_new_spritesheet(enum sprite_pos sprite) {
+        return !(sprite == SPRITE_BOTS_ARROW_UP
+                || sprite == SPRITE_BOTS_ARROW_DOWN
+                || sprite == SPRITE_BOTS_DIGIT);
+}
+
+int path_nb(enum sprite_pos sprite) {
+    int path_nb = sprite;
+    if (sprite == SPRITE_BOTS_ARROW_UP
+           || sprite == SPRITE_PLAYER_ARROW_DOWN)
+       path_nb -= 1; 
+    else if (sprite == SPRITE_BOTS_ARROW_DOWN
+            || sprite == SPRITE_PLAYERS_DIGIT)
+        path_nb -= 2;
+    else if (sprite == SPRITE_BOTS_DIGIT)
+        path_nb -= 3;
+    return path_nb;
 }
 
 //Menu run
@@ -124,7 +147,7 @@ void menu_run(struct menu* menu) {
     while(menu->state != MENU_STATE_QUIT) {
         while(SDL_PollEvent(&e) != 0) {
             if(e.type == SDL_QUIT)
-                menu->state = MENU_STATE_QUIT;
+                 menu->state = MENU_STATE_QUIT;
         }
         menu_render(menu);
     }
