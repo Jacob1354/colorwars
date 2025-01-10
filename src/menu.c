@@ -82,11 +82,11 @@ void menu_fill(struct menu* menu, SDL_Renderer* renderer) {
         menu->sprite_nb = MENU_SPRITE_QTT;
         menu->sprites = calloc(MENU_SPRITE_QTT, sizeof(struct sprite));
         if(menu->sprites != NULL) {
-            menu_gen_sprites(menu, renderer);
             menu->renderer = renderer;
             menu->players_nb = DEFAULT_PLAYERS_NB;
             menu->bots_nb = DEFAULT_BOTS_NB;
             menu->state = MENU_STATE_NONE;
+            menu_gen_sprites(menu, renderer);
        }
     }
 }
@@ -110,6 +110,7 @@ void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer) {
     }
 }
 
+
 int find_sprite_cols(enum sprite_id id) {
     int id_qtt = 1;
     if(id == SPRITE_PLAY || id == SPRITE_QUIT ||
@@ -118,7 +119,7 @@ int find_sprite_cols(enum sprite_id id) {
         id_qtt = 2;
     else if(id == SPRITE_PLAYERS_DIGIT
             || id == SPRITE_BOTS_DIGIT)
-        id_qtt = 5;
+        id_qtt = 6;
     return id_qtt;
         
 }
