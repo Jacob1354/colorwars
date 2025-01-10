@@ -41,7 +41,7 @@ unsigned int big_to_little_endian(unsigned char bytes[4]) {
 int check_png_signature(FILE* img) {
     char expected_sign[PNG_SIGNATURE_SIZE] = PNG_SIGNATURE;
     char actual_sign[PNG_SIGNATURE_SIZE];
-    if(fread((char*) actual_sign, sizeof(char), PNG_SIGNATURE_SIZE, img) == EOF)
+    if(fread((char*) actual_sign, sizeof(char), PNG_SIGNATURE_SIZE, img) < PNG_SIGNATURE_SIZE)
        return -1; 
     int i;
     for(i = 0; i < PNG_SIGNATURE_SIZE; i++)
