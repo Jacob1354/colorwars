@@ -40,13 +40,14 @@ void sprite_delete(struct sprite* sprite) {
     free(sprite);
 }
 
+
 int is_mouse_hovering(struct sprite* sprite) {
     if(sprite == NULL) {
         printf("Sprite is NULL\n");
         return -1;
     }
     int x, y;
-    SDL_Rect = sprite->box;
+    SDL_Rect box = sprite->box;
     SDL_GetMouseState(&x, &y);
     return (box.x <= x && x <= box.x + box.w)
         && (box.y <= y && y <= box.y + box.h)
