@@ -2,3 +2,5 @@ gimp
 obj
 include/*.d
 colorwars
+dbg_colorwars
+dbg_objs/
