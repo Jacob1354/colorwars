@@ -31,13 +31,13 @@ struct sprite {
 struct sprite* sprite_create(struct spritesheet* spritesheet,
         int sprite_pos, int x, int y, unsigned int w, unsigned int h);
 
+
 /*
  * Renders a sprite on the renderer of it's spritesheet
  *
  * @param sprite The sprite to render
 */
 void sprite_render(struct sprite* sprite);
-
 
 
 /*
@@ -47,6 +47,14 @@ void sprite_render(struct sprite* sprite);
 */ 
 void sprite_delete(struct sprite* sprite);
 
-
+/*
+ * Returns 1 if mouse is hovering the sprite. That is, the mouse coordinates are
+ * included in the sprite box (SDL_Rect).
+ *
+ * @param sprite The sprite to check
+ *
+ * @return 1 if mouse is hovering, 0 if not hovering, -1 if sprite is NULL
+*/
+int is_mouse_hovering(struct sprite* sprite);
 
 #endif
