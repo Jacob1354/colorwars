@@ -31,7 +31,7 @@ const int MENU_SPRITES_Y[MENU_SPRITE_QTT] = {
 
 //Data structs
 
-enum sprite_pos {
+enum sprite_id {
     SPRITE_BACKGROUND = 0,
     SPRITE_TITLE,
     SPRITE_PLAY,
@@ -49,9 +49,10 @@ enum sprite_pos {
 
 //General fcts
 void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer);
-int find_sprite_cols(enum sprite_pos sprite);
-int need_new_spritesheet(enum sprite_pos sprite);
-int path_nb(enum sprite_pos sprite);
+int find_sprite_cols(enum sprite_id sprite);
+int need_new_spritesheet(enum sprite_id sprite);
+int path_nb(enum sprite_id sprite);
+int get_sprite_pos(struct menu* menu, enum sprite_id id);
 
 //Menu init fcts
 void menu_fill(struct menu* menu, SDL_Renderer* renderer);
@@ -103,40 +104,40 @@ void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer) {
                         sprite_rows, sprite_cols, sprite_cols * sprite_rows,
                         renderer);
             get_png_dimensions(MENU_SPRITES_PATHS[path_nb(i)], dims);
-            menu->sprites[i] = sprite_create(ss, 0, MENU_SPRITES_X[i], 
+            menu->sprites[i] = sprite_create(ss, get_sprite_pos(menu, i), MENU_SPRITES_X[i], 
                     MENU_SPRITES_Y[i], dims[0], dims[1]);
        }
     }
 }
 
-int find_sprite_cols(enum sprite_pos sprite) {
-    int sprite_qtt = 1;
-    if(sprite == SPRITE_PLAY || sprite == SPRITE_QUIT ||
-            (sprite >= SPRITE_PLAYERS_ARROW_UP
-             && sprite <= SPRITE_BOTS_ARROW_DOWN))
-        sprite_qtt = 2;
-    else if(sprite == SPRITE_PLAYERS_DIGIT
-            || sprite == SPRITE_BOTS_DIGIT)
-        sprite_qtt = 5;
-    return sprite_qtt;
+int find_sprite_cols(enum sprite_id id) {
+    int id_qtt = 1;
+    if(id == SPRITE_PLAY || id == SPRITE_QUIT ||
+            (id >= SPRITE_PLAYERS_ARROW_UP
+             && id <= SPRITE_BOTS_ARROW_DOWN))
+        id_qtt = 2;
+    else if(id == SPRITE_PLAYERS_DIGIT
+            || id == SPRITE_BOTS_DIGIT)
+        id_qtt = 5;
+    return id_qtt;
         
 }
 
-int need_new_spritesheet(enum sprite_pos sprite) {
-        return !(sprite == SPRITE_BOTS_ARROW_UP
-                || sprite == SPRITE_BOTS_ARROW_DOWN
-                || sprite == SPRITE_BOTS_DIGIT);
+int need_new_spritesheet(enum sprite_id id) {
+        return !(id == SPRITE_BOTS_ARROW_UP
+                || id == SPRITE_BOTS_ARROW_DOWN
+                || id == SPRITE_BOTS_DIGIT);
 }
 
-int path_nb(enum sprite_pos sprite) {
-    int path_nb = sprite;
-    if (sprite == SPRITE_BOTS_ARROW_UP
-           || sprite == SPRITE_PLAYER_ARROW_DOWN)
+int path_nb(enum sprite_id id) {
+    int path_nb = id;
+    if (id == SPRITE_BOTS_ARROW_UP
+           || id == SPRITE_PLAYER_ARROW_DOWN)
        path_nb -= 1; 
-    else if (sprite == SPRITE_BOTS_ARROW_DOWN
-            || sprite == SPRITE_PLAYERS_DIGIT)
+    else if (id == SPRITE_BOTS_ARROW_DOWN
+            || id == SPRITE_PLAYERS_DIGIT)
         path_nb -= 2;
-    else if (sprite == SPRITE_BOTS_DIGIT)
+    else if (id == SPRITE_BOTS_DIGIT)
         path_nb -= 3;
     return path_nb;
 }
