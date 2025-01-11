@@ -58,6 +58,7 @@ int get_sprite_pos(struct menu* menu, enum sprite_id id);
 void menu_fill(struct menu* menu, SDL_Renderer* renderer);
 
 //Menu run fcts
+void menu_event_loop(struct menu* menu, SDL_Event e);
 void menu_mouse_click(struct menu* menu);
 void menu_change_players_nb(struct menu* menu, int increment);
 void menu_change_bots_nb(struct menu* menu, int increment);
@@ -163,12 +164,7 @@ void menu_run(struct menu* menu) {
         SDL_Event e;
         while(menu->state != MENU_STATE_QUIT
                 && menu->state != MENU_STATE_PLAY) {
-            while(SDL_PollEvent(&e) != 0) {
-                if(e.type == SDL_QUIT)
-                     menu->state = MENU_STATE_QUIT;
-            else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
-                menu_mouse_click(menu);
-           }
+            menu_event_loop(menu, e); 
             if(menu->state != MENU_STATE_QUIT && menu->state != MENU_STATE_PLAY)
                 if(update_menu_focus_state(menu))
                     update_sprites(menu);
@@ -176,6 +172,15 @@ void menu_run(struct menu* menu) {
         }
         if(menu->state == MENU_STATE_PLAY) //Just so it doesn't crash for now
             menu->state = MENU_STATE_QUIT;
+    }
+}
+
+void menu_event_loop(struct menu* menu, SDL_Event e) {
+    while(SDL_PollEvent(&e) != 0) {
+        if(e.type == SDL_QUIT)
+              menu->state = MENU_STATE_QUIT;
+         else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+             menu_mouse_click(menu);
     }
 }
 
