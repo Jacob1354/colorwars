@@ -1,5 +1,14 @@
+#include "../include/application.h"
+#include "../include/sdl2.h"
 #include <stdio.h>
+
 int main() {
-    printf("colorwars !!!\n");
-    return 0;
+    struct application *application = application_initialize();
+    if (application != NULL) {
+        application_run(application);
+    } else {
+        fprintf(stderr, "Failed to initialize the application...");
+        return -1;
+    }
+    application_shut_down(application);
 }
