@@ -157,13 +157,15 @@ int get_sprite_pos(struct menu* menu, enum sprite_id id) {
 //Menu run
 void menu_run(struct menu* menu) {
     SDL_Event e;
-    while(menu->state != MENU_STATE_QUIT) {
+    while(menu->state != MENU_STATE_QUIT
+            && menu->state != MENU_STATE_PLAY) {
         while(SDL_PollEvent(&e) != 0) {
             if(e.type == SDL_QUIT)
                  menu->state = MENU_STATE_QUIT;
         }
-        if(update_menu_focus_state(menu))
-            update_sprites(menu);
+        if(menu->state != MENU_STATE_QUIT && menu->state != MENU_STATE_PLAY)
+            if(update_menu_focus_state(menu))
+                update_sprites(menu);
         menu_render(menu);
     }
 }
