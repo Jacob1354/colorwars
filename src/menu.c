@@ -59,7 +59,7 @@ void menu_fill(struct menu* menu, SDL_Renderer* renderer);
 
 //Menu run fcts
 void menu_render(struct menu* menu);
-
+void update_menu_state(struct menu* menu);
 
 
 
@@ -160,6 +160,7 @@ void menu_run(struct menu* menu) {
             if(e.type == SDL_QUIT)
                  menu->state = MENU_STATE_QUIT;
         }
+        update_menu_state(menu);
         menu_render(menu);
     }
 }
@@ -172,6 +173,22 @@ void menu_render(struct menu* menu) {
     SDL_RenderPresent(menu->renderer);
 }
 
+void update_menu_state(struct menu* menu) {
+    if(is_mouse_hovering(menu->sprites[SPRITE_PLAY]))
+        menu->state = MENU_STATE_PLAY;
+    else if(is_mouse_hovering(menu->sprites[SPRITE_QUIT]))
+        menu->state = MENU_STATE_QUIT;
+    else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
+        menu->state = MENU_STATE_PLAYERS_UP;
+    else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
+        menu->state = MENU_STATE_PLAYERS_DOWN;
+    else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_UP]))
+        menu->state = MENU_STATE_BOTS_UP;
+    else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
+        menu->state = MENU_STATE_BOTS_DOWN;
+    else menu->state = MENU_STATE_NONE;
+}
+
 
 //Menu delete
 void menu_delete(struct menu* menu) {
@@ -181,3 +198,22 @@ void menu_delete(struct menu* menu) {
             free(menu->sprites[i]);
     free(menu);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
