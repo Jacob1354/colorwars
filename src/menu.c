@@ -59,6 +59,8 @@ void menu_fill(struct menu* menu, SDL_Renderer* renderer);
 
 //Menu run fcts
 void menu_mouse_click(struct menu* menu);
+void menu_change_players_nb(struct menu* menu, int increment);
+void menu_change_bots_nb(struct menu* menu, int increment);
 void menu_render(struct menu* menu);
 //Returns true if there has been a state change
 int update_menu_focus_state(struct menu* menu);
@@ -187,20 +189,33 @@ void menu_mouse_click(struct menu* menu) {
                 menu->state = MENU_STATE_QUIT;
                 break;
             case MENU_STATE_PLAYERS_UP_FOCUS:
-                menu->players_nb = (menu->players_nb+1)%MAX_PLAYERS;
+                menu_change_players_nb(menu, 1);
                 break;
             case MENU_STATE_PLAYERS_DOWN_FOCUS:
-                menu->players_nb = (menu->players_nb-1)%MAX_PLAYERS;
+                menu_change_players_nb(menu, -1);
                 break;
             case MENU_STATE_BOTS_UP_FOCUS:
-                menu->bots_nb = (menu->bots_nb+1)%MAX_BOTS;
+                menu_change_bots_nb(menu, 1);
                 break;
             case MENU_STATE_BOTS_DOWN_FOCUS:
-                menu->bots_nb = (menu->bots_nb-1)%MAX_BOTS;
+                menu_change_bots_nb(menu, -1);
                 break;
             default:
         } 
     }
+}
+
+void menu_change_players_nb(struct menu* menu, int increment) {
+    menu->players_nb = (menu->players_nb+increment);
+    if(menu->players_nb < MIN_PLAYERS) menu->players_nb = MAX_PLAYERS;
+    if(menu->players_nb > MAX_PLAYERS) menu->players_nb = MIN_PLAYERS;
+    menu->sprites[SPRITE_PLAYERS_DIGIT]->sprite_pos = menu->players_nb;
+}
+
+void menu_change_bots_nb(struct menu* menu, int increment) {
+    menu->bots_nb = (menu->bots_nb+increment)%(MAX_BOTS+1);
+    if(menu->bots_nb < MIN_BOTS) menu->bots_nb = MAX_BOTS;
+    menu->sprites[SPRITE_BOTS_DIGIT]->sprite_pos = menu->bots_nb;
 }
 
 void menu_render(struct menu* menu) {

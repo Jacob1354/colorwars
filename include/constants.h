@@ -10,6 +10,8 @@
 #define DEFAULT_BOTS_NB 0
 #define MAX_PLAYERS 4
 #define MAX_BOTS 4
+#define MIN_PLAYERS 2
+#define MIN_BOTS 0
 
 //General macros
 
