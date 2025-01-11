@@ -18,8 +18,8 @@ struct sprite* sprite_create(struct spritesheet* spritesheet,
     sprite->sprite_pos = sprite_pos;
     sprite->box.x = x;
     sprite->box.y = y;
-    sprite->box.w = w;
-    sprite->box.h = h;
+    sprite->box.w = w/spritesheet->num_columns;
+    sprite->box.h = h/spritesheet->num_rows;
     return sprite;
 }
 
