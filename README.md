@@ -44,6 +44,17 @@ directory. Afterwards, make sure the program is executable. If it is not,
 Once the insallation is done, all you need to do to run the program is run
 `./colorwars` in the shell from the project directory.
 
+### Menu Controls
+
+The whole game is controled with the mouse. The menu should look something like
+this.
+![Image of the menu](assets/doc/menu.png)
+
+The buttons are the following : *Play*, *Quit* and the different arrows.
+You'll be able to know you're hovering a button by it's change. The *Play*
+and *Quit* buttons will change color and the arrows will grow. Pressing
+the left mouse button will do trigger the button.
+
 
 ### Game Controls
 
