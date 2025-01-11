@@ -156,78 +156,87 @@ int get_sprite_pos(struct menu* menu, enum sprite_id id) {
 
 //Menu run
 void menu_run(struct menu* menu) {
-    SDL_Event e;
-    while(menu->state != MENU_STATE_QUIT
-            && menu->state != MENU_STATE_PLAY) {
-        while(SDL_PollEvent(&e) != 0) {
-            if(e.type == SDL_QUIT)
-                 menu->state = MENU_STATE_QUIT;
+    if(menu != NULL) {
+        SDL_Event e;
+        while(menu->state != MENU_STATE_QUIT
+                && menu->state != MENU_STATE_PLAY) {
+            while(SDL_PollEvent(&e) != 0) {
+                if(e.type == SDL_QUIT)
+                     menu->state = MENU_STATE_QUIT;
+           }
+            if(menu->state != MENU_STATE_QUIT && menu->state != MENU_STATE_PLAY)
+                if(update_menu_focus_state(menu))
+                    update_sprites(menu);
+            menu_render(menu);
         }
-        if(menu->state != MENU_STATE_QUIT && menu->state != MENU_STATE_PLAY)
-            if(update_menu_focus_state(menu))
-                update_sprites(menu);
-        menu_render(menu);
     }
 }
 
-
 void menu_render(struct menu* menu) {
-    int i;
-    for(i = 0; i < menu->sprite_nb; i++)
-        sprite_render(menu->sprites[i]);
-    SDL_RenderPresent(menu->renderer);
+    if(menu != NULL) {
+        int i;
+        for(i = 0; i < menu->sprite_nb; i++)
+            sprite_render(menu->sprites[i]);
+        SDL_RenderPresent(menu->renderer);
+    }
 }
 
 int update_menu_focus_state(struct menu* menu) {
-    enum menu_state old_state = menu->state;
-    if(is_mouse_hovering(menu->sprites[SPRITE_PLAY]))
-        menu->state = MENU_STATE_PLAY_FOCUS;
-    else if(is_mouse_hovering(menu->sprites[SPRITE_QUIT]))
-        menu->state = MENU_STATE_QUIT_FOCUS;
-    else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
-        menu->state = MENU_STATE_PLAYERS_UP_FOCUS;
-    else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
-        menu->state = MENU_STATE_PLAYERS_DOWN_FOCUS;
-    else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_UP]))
-        menu->state = MENU_STATE_BOTS_UP_FOCUS;
-    else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
-        menu->state = MENU_STATE_BOTS_DOWN_FOCUS;
-    else menu->state = MENU_STATE_NONE;
-    return old_state != menu->state;
+    if(menu != NULL) {
+        enum menu_state old_state = menu->state;
+        if(is_mouse_hovering(menu->sprites[SPRITE_PLAY]))
+            menu->state = MENU_STATE_PLAY_FOCUS;
+        else if(is_mouse_hovering(menu->sprites[SPRITE_QUIT]))
+            menu->state = MENU_STATE_QUIT_FOCUS;
+        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
+            menu->state = MENU_STATE_PLAYERS_UP_FOCUS;
+        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
+            menu->state = MENU_STATE_PLAYERS_DOWN_FOCUS;
+        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_UP]))
+            menu->state = MENU_STATE_BOTS_UP_FOCUS;
+        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
+            menu->state = MENU_STATE_BOTS_DOWN_FOCUS;
+        else menu->state = MENU_STATE_NONE;
+        return old_state != menu->state;
+    } else return -1;
 }
 
 void update_sprites(struct menu* menu) {
-    set_buttons_to_default(menu);
-    switch(menu->state) {
-        case MENU_STATE_PLAY_FOCUS:
-            menu->sprites[SPRITE_PLAY]->sprite_pos = 1; 
-            break;
-        case MENU_STATE_QUIT_FOCUS:
-            menu->sprites[SPRITE_QUIT]->sprite_pos = 1; 
-            break;
-        case MENU_STATE_PLAYERS_UP_FOCUS:
-            menu->sprites[SPRITE_PLAYERS_ARROW_UP]->sprite_pos = 1; 
-            break;
-        case MENU_STATE_PLAYERS_DOWN_FOCUS:
-            menu->sprites[SPRITE_PLAYER_ARROW_DOWN]->sprite_pos = 1; 
-            break;
-        case MENU_STATE_BOTS_UP_FOCUS:
-            menu->sprites[SPRITE_BOTS_ARROW_UP]->sprite_pos = 1; 
-            break;
-        case MENU_STATE_BOTS_DOWN_FOCUS:
-            menu->sprites[SPRITE_BOTS_ARROW_DOWN]->sprite_pos = 1; 
-            break;
-        default:
+    if(menu != NULL) {
+        set_buttons_to_default(menu);
+        switch(menu->state) {
+            case MENU_STATE_PLAY_FOCUS:
+                menu->sprites[SPRITE_PLAY]->sprite_pos = 1; 
+                break;
+            case MENU_STATE_QUIT_FOCUS:
+                menu->sprites[SPRITE_QUIT]->sprite_pos = 1; 
+                break;
+            case MENU_STATE_PLAYERS_UP_FOCUS:
+                menu->sprites[SPRITE_PLAYERS_ARROW_UP]->sprite_pos = 1; 
+                break;
+            case MENU_STATE_PLAYERS_DOWN_FOCUS:
+                menu->sprites[SPRITE_PLAYER_ARROW_DOWN]->sprite_pos = 1; 
+                break;
+            case MENU_STATE_BOTS_UP_FOCUS:
+                menu->sprites[SPRITE_BOTS_ARROW_UP]->sprite_pos = 1; 
+                break;
+            case MENU_STATE_BOTS_DOWN_FOCUS:
+                menu->sprites[SPRITE_BOTS_ARROW_DOWN]->sprite_pos = 1; 
+                break;
+            default:
+        }
     }
 }
 
 void set_buttons_to_default(struct menu* menu) {
-    menu->sprites[SPRITE_PLAY]->sprite_pos = 0;
-    menu->sprites[SPRITE_QUIT]->sprite_pos = 0;
-    menu->sprites[SPRITE_PLAYERS_ARROW_UP]->sprite_pos = 0;
-    menu->sprites[SPRITE_PLAYER_ARROW_DOWN]->sprite_pos = 0;
-    menu->sprites[SPRITE_BOTS_ARROW_UP]->sprite_pos = 0;
-    menu->sprites[SPRITE_BOTS_ARROW_DOWN]->sprite_pos = 0;
+    if(menu != NULL) {
+        menu->sprites[SPRITE_PLAY]->sprite_pos = 0;
+        menu->sprites[SPRITE_QUIT]->sprite_pos = 0;
+        menu->sprites[SPRITE_PLAYERS_ARROW_UP]->sprite_pos = 0;
+        menu->sprites[SPRITE_PLAYER_ARROW_DOWN]->sprite_pos = 0;
+        menu->sprites[SPRITE_BOTS_ARROW_UP]->sprite_pos = 0;
+        menu->sprites[SPRITE_BOTS_ARROW_DOWN]->sprite_pos = 0;
+    }
 }
 
 //Menu delete
