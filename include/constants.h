@@ -8,6 +8,8 @@
 
 #define DEFAULT_PLAYERS_NB 2
 #define DEFAULT_BOTS_NB 0
+#define MAX_PLAYERS 4
+#define MAX_BOTS 4
 
 //General macros
 

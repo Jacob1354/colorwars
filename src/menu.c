@@ -58,6 +58,7 @@ int get_sprite_pos(struct menu* menu, enum sprite_id id);
 void menu_fill(struct menu* menu, SDL_Renderer* renderer);
 
 //Menu run fcts
+void menu_mouse_click(struct menu* menu);
 void menu_render(struct menu* menu);
 //Returns true if there has been a state change
 int update_menu_focus_state(struct menu* menu);
@@ -163,12 +164,42 @@ void menu_run(struct menu* menu) {
             while(SDL_PollEvent(&e) != 0) {
                 if(e.type == SDL_QUIT)
                      menu->state = MENU_STATE_QUIT;
+            else if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+                menu_mouse_click(menu);
            }
             if(menu->state != MENU_STATE_QUIT && menu->state != MENU_STATE_PLAY)
                 if(update_menu_focus_state(menu))
                     update_sprites(menu);
             menu_render(menu);
         }
+        if(menu->state == MENU_STATE_PLAY) //Just so it doesn't crash for now
+            menu->state = MENU_STATE_QUIT;
+    }
+}
+
+void menu_mouse_click(struct menu* menu) {
+    if(menu != NULL) {
+        switch(menu->state) {
+            case MENU_STATE_PLAY_FOCUS:
+                menu->state = MENU_STATE_PLAY;
+                break;
+            case MENU_STATE_QUIT_FOCUS:
+                menu->state = MENU_STATE_QUIT;
+                break;
+            case MENU_STATE_PLAYERS_UP_FOCUS:
+                menu->players_nb = (menu->players_nb+1)%MAX_PLAYERS;
+                break;
+            case MENU_STATE_PLAYERS_DOWN_FOCUS:
+                menu->players_nb = (menu->players_nb-1)%MAX_PLAYERS;
+                break;
+            case MENU_STATE_BOTS_UP_FOCUS:
+                menu->bots_nb = (menu->bots_nb+1)%MAX_BOTS;
+                break;
+            case MENU_STATE_BOTS_DOWN_FOCUS:
+                menu->bots_nb = (menu->bots_nb-1)%MAX_BOTS;
+                break;
+            default:
+        } 
     }
 }
 
