@@ -45,4 +45,20 @@ struct game {
 // --------- //
 
 
+/*
+ * Creates a game instance
+ *
+ * @param width Width of the grid (in box els)
+ * @param height Height of the grid (in box els)
+ * @param players_nb Quantity of players playing
+ * @param bots_nb Quantity of bots playing
+ *
+ * @return Pointer to the game instance or NULL if there was an error
+*/
+struct game* game_create(int width, int height, int players_nb, int bots_nb);
+
+
+
+
+
 #endif
