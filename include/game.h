@@ -55,10 +55,14 @@ struct game {
  *
  * @return Pointer to the game instance or NULL if there was an error
 */
-struct game* game_create(int width, int height, int players_nb, int bots_nb);
+struct game* game_create(int width, int height, int players_nb, 
+        int bots_nb, SDL_Renderer* renderer);
 
-
-
-
+/*
+ * Runs the game passed as arg
+ *
+ * @param game The game to run
+*/
+void game_run(struct game* game);
 
 #endif
