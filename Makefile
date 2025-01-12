@@ -22,6 +22,9 @@ all: build
 
 build: $(DIRS) $(EXEC)
 
+mem_leak: debug
+mem_leak:
+	valgrind ./$(DBG_EXEC)
 
 debug: CFLAGS += -g 
 debug: $(DIRS) $(DBG_EXEC)
@@ -49,4 +52,4 @@ clean:
 	@rm -f $(wildcard $(INCDIRS)/*.d) $(wildcard $(OBJDIRS)/*.o) $(wildcard $(DBG_OBJDIRS)/*.o) $(EXEC)
 	
 
-.PHONY: build debug clean
+.PHONY: build debug clean mem_leak
