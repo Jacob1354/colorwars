@@ -25,7 +25,7 @@ struct box {
     int y;                  // Board relative y
     enum player player;     // Player owning the box
     int points;             // Nb of dots of the box 
-    struct srite* sprite    // Sprite of the box
+    struct srite* sprite;   // Sprite of the box
 };
 
 struct game {
