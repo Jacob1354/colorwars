@@ -65,4 +65,12 @@ struct game* game_create(int width, int height, int players_nb,
 */
 void game_run(struct game* game);
 
+
+/*
+ * Deletes a game struct
+ *
+ * @param game The game to delete
+*/
+void game_delete(struct game* game);
+
 #endif
