@@ -23,6 +23,8 @@ void box_free(struct box* box);
 void event_loop(struct game* game);
 void game_click(struct game* game);
 void game_render(struct game* game);
+void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
+int game_render_grid(struct game* game);
 
 
 struct game* game_create(int width, int height, int players_nb, 
@@ -134,6 +136,16 @@ void event_loop(struct game* game) {
     }
 }
 
+void game_render(struct game* game) {
+    if(game != NULL) {
+        Uint8 r, g, b;
+        game_set_background_color(game, &r, &g, &b);
+        SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
+        SDL_RenderClear(game->renderer);
+        if(game_render_grid(game) != 1)
+            printf("Unable to properly display game grid");
+    }
+}
 
 
 void game_delete(struct game* game) {
