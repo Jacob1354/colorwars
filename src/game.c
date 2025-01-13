@@ -83,6 +83,23 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
     return 1;
 }
 
+struct box* box_create(int x, int y, enum player owner, 
+        int points, struct sprite* sprite) {
+    struct box* box = malloc(sizeof(struct box));
+    if(box == NULL) {
+        printf(ERR_MSG_ALLOC, "struct box");
+        return NULL;
+    }
+    box->x = x;
+    box->y = y;
+    box->player = owner;
+    if(points < 0) points = 0;
+    box->points = points % GAME_BOX_MAX_POINTS;
+    box->sprite = sprite;
+}
+
+
+
 void game_run(struct game* game) {
 
 }
