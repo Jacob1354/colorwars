@@ -41,10 +41,28 @@ struct application* init_app(struct application* app) {
 
 void application_run(struct application *app) {
     while(app->state != APPLICATION_STATE_QUIT) {
-        if(app->state == APPLICATION_STATE_MENU)
-            menu_run(app->menu);
-        if(app->menu->state == MENU_STATE_QUIT)
-                app->state = APPLICATION_STATE_QUIT;
+        switch(app->state) {
+            case APPLICATION_STATE_MENU:
+                if(app->menu != NULL) {
+                    menu_run(app->menu); 
+                    if(app->menu->state == MENU_STATE_QUIT)
+                        app->state = APPLICATION_STATE_QUIT;
+                    else if(app->menu->state == MENU_STATE_PLAY)
+                        app->state = APPLICATION_STATE_PLAY;
+                }
+                break;
+            case APPLICATION_STATE_PLAY:
+                app->game = game_create(GAME_W, GAME_H,
+                        app->menu->players_nb,
+                        app->menu->bots_nb,
+                        app->renderer);
+                if(app->game != NULL)
+                    game_run(app->game);
+                app->state = APPLICATION_STATE_MENU;
+                break;
+            case APPLICATION_STATE_QUIT:
+            default:
+        }
     }
 }
 

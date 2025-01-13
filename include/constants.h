@@ -29,7 +29,8 @@
 
 
 //Game constants
-
+#define GAME_BOARD_W 8
+#define GAME_BOARD_H 8
 
 //Game macros
 
