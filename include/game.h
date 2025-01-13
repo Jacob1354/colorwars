@@ -30,7 +30,7 @@ struct box {
 };
 
 struct game {
-    enum gamestate gamestate;
+    enum gamestate state;
     int width;
     int height;
     int players_nb;
