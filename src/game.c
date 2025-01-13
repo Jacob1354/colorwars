@@ -107,11 +107,12 @@ struct box* box_create(int x, int y, enum player owner,
 }
 
 
-
 void game_run(struct game* game) {
-    while(game->state != GAME_STATE_QUIT) {
-        event_loop(game);
-        game_render(game);
+    if(game != NULL) {
+        while(game->state != GAME_STATE_QUIT) {
+            event_loop(game);
+            game_render(game);
+        }
     }
 }
 
