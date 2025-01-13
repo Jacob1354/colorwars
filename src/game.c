@@ -18,6 +18,11 @@ struct box* box_create(int x, int y, enum player owner,
 void box_free(struct box* box);
 
 
+//Game run functions
+//==========================================================
+void event_loop(struct game* game);
+void game_render(struct game* game);
+
 
 struct game* game_create(int width, int height, int players_nb, 
         int bots_nb, SDL_Renderer* renderer) {
@@ -102,7 +107,10 @@ struct box* box_create(int x, int y, enum player owner,
 
 
 void game_run(struct game* game) {
-
+    while(game->state != GAME_STATE_QUIT) {
+        event_loop(game);
+        game_render(game);
+    }
 }
 
 
