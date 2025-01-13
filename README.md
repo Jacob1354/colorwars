@@ -1,5 +1,9 @@
 # Colorwars
 
+## Current State
+Although the game (except the bots) was supposed to be completed by the 12
+january, an issue problem occured, slowing down the second sprint. The second
+sprint (the game itself) should be done by the end of the week.
 
 ## Description
 This program is a simple video game where up to 4 players play agains one
