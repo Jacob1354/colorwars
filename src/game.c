@@ -147,6 +147,34 @@ void game_render(struct game* game) {
     }
 }
 
+void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b) {
+    if(r != NULL && g != NULL && b != NULL) {
+        switch(game->player_turn) {
+                case PLAYER_PINK:
+                    *r = 244;
+                    *g = 20;
+                    *b = 172;
+                    break;
+                case PLAYER_CYAN:
+                    *r = 4;
+                    *g = 252;
+                    *b = 244;
+                    break;
+                case PLAYER_GREEN:
+                    *r = 66;
+                    *g = 229;
+                    *b = 40;
+                    break;
+                case PLAYER_YELLOW:
+                    *r = 228;
+                    *g = 212;
+                    *b = 44;
+                    break;
+                default:
+        }
+    }
+}
+
 
 void game_delete(struct game* game) {
     if(game != NULL) {
