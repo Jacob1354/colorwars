@@ -22,11 +22,11 @@ enum player {
 };
 
 struct box {
-    int x;                  // Board relative x
-    int y;                  // Board relative y
-    enum player player;     // Player owning the box
-    int points;             // Nb of dots of the box 
-    struct srite* sprite;   // Sprite of the box
+    int x;                      // Board relative x
+    int y;                      // Board relative y
+    enum player player;         // Player owning the box
+    int points;                 // Nb of dots of the box 
+    struct sprite* sprite;      // Sprite of the box
 };
 
 struct game {
