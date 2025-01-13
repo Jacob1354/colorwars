@@ -10,7 +10,8 @@
 enum gamestate {
     GAME_STATE_PLAY,
     GAME_STATE_GAME_OVER,
-    GAME_STATE_QUIT
+    GAME_STATE_QUIT,
+    GAME_STATE_FORCE_QUIT
 };
 
 enum player {

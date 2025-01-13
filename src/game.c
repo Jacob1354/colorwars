@@ -21,6 +21,7 @@ void box_free(struct box* box);
 //Game run functions
 //==========================================================
 void event_loop(struct game* game);
+void game_click(struct game* game);
 void game_render(struct game* game);
 
 
@@ -115,6 +116,24 @@ void game_run(struct game* game) {
         }
     }
 }
+
+void event_loop(struct game* game) {
+    if(game != NULL) {
+        SDL_Event e;
+        while(SDL_PollEvent(&e)) {
+            switch(e.type) {
+                case(SDL_QUIT):
+                    game->state = GAME_STATE_FORCE_QUIT;
+                    break;
+                case(SDL_MOUSEBUTTONDOWN):
+                    if(e.button.button == SDL_BUTTON_LEFT)
+                        game_click(game);
+                default:
+            }
+        }
+    }
+}
+
 
 
 void game_delete(struct game* game) {
