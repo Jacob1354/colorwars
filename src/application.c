@@ -52,7 +52,7 @@ void application_run(struct application *app) {
                 }
                 break;
             case APPLICATION_STATE_PLAY:
-                app->game = game_create(GAME_W, GAME_H,
+                app->game = game_create(GAME_BOARD_W, GAME_BOARD_H,
                         app->menu->players_nb,
                         app->menu->bots_nb,
                         app->renderer);
