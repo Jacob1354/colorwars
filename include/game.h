@@ -14,11 +14,11 @@ enum gamestate {
 };
 
 enum player {
-    PINK,
-    CYAN,
-    GREEN,
-    YELLOW,
-    NONE
+    PLAYER_PINK,
+    PLAYER_CYAN,
+    PLAYER_GREEN,
+    PLAYER_YELLOW,
+    PLAYER_NONE
 };
 
 struct box {
