@@ -110,14 +110,21 @@ void game_delete(struct game* game) {
     if(game != NULL) {
         if(game->grid != NULL) {
             int i;
-            for(i = 0; i < game->width * game->height; i++) {
-                box_free(game->grid[i]);
-            }
+            for(i = 0; i < game->width * game->height; i++)
+                if(game->grid[i] != NULL) 
+                    box_free(game->grid[i]);
         }
     }
     free(game);
 }
 
+void box_free(struct box* box) {
+    if(box != NULL && box->sprite != NULL) {
+        spritesheet_delete(box->sprite->spritesheet);
+        sprite_delete(box->sprite);
+    }
+    free(box);
+}
 
 
 
