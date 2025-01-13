@@ -15,6 +15,7 @@ int init_grid(struct game* game);
 int fill_grid(struct game* game, struct spritesheet* spritesheet); 
 struct box* box_create(int x, int y, enum player owner, 
         int points, struct sprite* sprite);
+void box_free(struct box* box);
 
 
 
@@ -103,9 +104,20 @@ struct box* box_create(int x, int y, enum player owner,
 void game_run(struct game* game) {
 
 }
-void game_delete(struct game* game) {
 
+
+void game_delete(struct game* game) {
+    if(game != NULL) {
+        if(game->grid != NULL) {
+            int i;
+            for(i = 0; i < game->width * game->height; i++) {
+                box_free(game->grid[i]);
+            }
+        }
+    }
+    free(game);
 }
+
 
 
 
