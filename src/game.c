@@ -44,6 +44,7 @@ struct game* game_create(int width, int height, int players_nb,
         game->bots_nb = bots_nb;
         game->renderer = renderer;
     }
+    return game;
 }
 
 int init_grid(struct game* game) {
@@ -102,6 +103,7 @@ struct box* box_create(int x, int y, enum player owner,
     if(points < 0) points = 0;
     box->points = points % GAME_BOX_MAX_POINTS;
     box->sprite = sprite;
+    return box;
 }
 
 
