@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <stdib.h>
+#include <stdlib.h>
 #include "../include/game.h"
 #include "../include/constants.h"
-#include "../include/spritesheet"
+#include "../include/spritesheet.h"
 #include "../include/img_reader.h"
 
 
@@ -12,7 +12,9 @@
 //Initialize the game grid. Returns 1 if worked, -1 if game was NULL, 0
 //otherwise
 int init_grid(struct game* game); 
-int fill_grid(struct game* game, struct spritesheet* spritesheet, int dim[2]);
+int fill_grid(struct game* game, struct spritesheet* spritesheet); 
+struct box* box_create(int x, int y, enum player owner, 
+        int points, struct sprite* sprite);
 
 
 
@@ -48,15 +50,37 @@ int init_grid(struct game* game) {
         printf(ERR_MSG_ALLOC, "game->grid");
         return 0;
     }
-    unsigned int dim[2];
     struct spritesheet* ss = spritesheet_create(GAME_BOX_SPRITE_PATH,
             GAME_BOX_SPRITE_NUM_ROWS, GAME_BOX_SPRITE_NUM_COLS, 
             GAME_BOX_SPRITE_NUM_SPRITES, game->renderer);
     if(ss == NULL)
         return 0;
+    return fill_grid(game, ss); 
+}
+
+int fill_grid(struct game* game, struct spritesheet* ss) {
+    unsigned int dim[2];
     if(get_png_dimensions(GAME_BOX_SPRITE_PATH, dim) != 1)
         return 0;
-   return fill_grid(game, ss, dim); 
+    dim[0] = dim[0]/GAME_BOX_SPRITE_NUM_COLS;
+    dim[1] = dim[1]/GAME_BOX_SPRITE_NUM_ROWS;
+    int x_og = (WND_W - game->width * dim[0])/2;
+    int y_og = (WND_H - game->height * dim[1])/2;
+    int i;
+    struct sprite* sprite;
+    for(i = 0; i < GAME_BOARD_H * GAME_BOARD_W; i++) {
+        sprite = sprite_create(ss, 0,
+                x_og + (i - i/GAME_BOARD_W * dim[0]),
+                y_og + (i/GAME_BOARD_W * dim[1]),
+                dim[0], dim[1]);
+        if(sprite == NULL)
+            return 0;
+        game->grid[i] = box_create(i - i/GAME_BOARD_W,
+                i/GAME_BOARD_W, PLAYER_NONE, 0, sprite);
+        if(game->grid[i] == NULL)
+            return 0;
+    }
+    return 1;
 }
 
 void game_run(struct game* game) {
