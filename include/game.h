@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include "sdl2.h"
+#include "sprite.h"
 
 // --------------- //
 // Data structures //
