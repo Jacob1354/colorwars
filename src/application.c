@@ -57,10 +57,14 @@ void application_run(struct application *app) {
                         app->menu->players_nb,
                         app->menu->bots_nb,
                         app->renderer);
-                if(app->game != NULL)
+                if(app->game != NULL) {
                     game_run(app->game);
+                    if(app->game->state == GAME_STATE_FORCE_QUIT)
+                        app->state = APPLICATION_STATE_QUIT;
+                    else if(app->game->state == GAME_STATE_QUIT)
+                        app->state = APPLICATION_STATE_MENU;
+                }
                 game_delete(app->game);
-                app->state = APPLICATION_STATE_MENU;
                 break;
             case APPLICATION_STATE_QUIT:
             default:
