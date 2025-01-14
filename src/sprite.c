@@ -36,7 +36,6 @@ void sprite_render(struct sprite* sprite) {
 
 
 void sprite_delete(struct sprite* sprite) {
-    spritesheet_delete(sprite->spritesheet);
     free(sprite);
 }
 

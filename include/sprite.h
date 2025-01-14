@@ -41,7 +41,9 @@ void sprite_render(struct sprite* sprite);
 
 
 /*
- * Deletes a sprite
+ * Deletes a sprite. 
+ * ATTENTION : spritesheet of the sprite is not freed with this function.
+ * It must be done by the user since the sprites can share the same spritesheet
  *
  * @param sprite The sprite to delete
 */ 
