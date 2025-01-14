@@ -39,11 +39,11 @@ struct game* game_create(int width, int height, int players_nb,
         return NULL;
     }
     game->renderer = renderer;
+    game->width = width;
+    game->height = height;
     if(init_grid(game) == 1) { 
         game->state = GAME_STATE_PLAY;
         game->player_turn = PLAYER_PINK;
-        game->width = width;
-        game->height = height;
         game->players_nb = players_nb;
         game->bots_nb = bots_nb;
     }
@@ -84,8 +84,8 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
     struct sprite* sprite;
     for(i = 0; i < GAME_BOARD_H * GAME_BOARD_W; i++) {
         sprite = sprite_create(ss, 0,
-                x_og + (i - i/GAME_BOARD_W * dim[0]),
-                y_og + (i/GAME_BOARD_W * dim[1]),
+                x_og + ((i - i/GAME_BOARD_H*GAME_BOARD_W) * dim[0]),
+                y_og + ((i/GAME_BOARD_H) * dim[1]),
                 dim[0], dim[1]);
         if(sprite == NULL)
             return 0;
