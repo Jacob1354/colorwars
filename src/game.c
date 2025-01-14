@@ -143,7 +143,7 @@ void game_render(struct game* game) {
         SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
         SDL_RenderClear(game->renderer);
         if(game_render_grid(game) != 1)
-            printf("Unable to properly display game grid");
+            printf("Unable to properly render game grid\n");
     }
 }
 
@@ -175,6 +175,22 @@ void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b) 
     }
 }
 
+int game_render_grid(struct game* game) {
+    int return_code = 1;
+    if(game != NULL && game->grid != NULL) {
+        int i;
+        for(i = 0; i < game->width * game->height; i++) {
+            if(game->grid[i] != NULL && game->grid[i]->sprite != NULL)
+                sprite_render(game->grid[i]->sprite);
+            else { 
+                printf("game.c::game_render_grid:"
+                        "Unable to render sprite #%d\n", i);
+                return_code = 0;
+            }
+        }
+    } else return_code = -1;
+    return return_code;
+}
 
 void game_delete(struct game* game) {
     if(game != NULL) {
