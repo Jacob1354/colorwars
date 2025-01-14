@@ -59,6 +59,14 @@ void menu_run(struct menu* menu);
 */ 
 void menu_delete(struct menu* menu);
 
-
+/*
+ * Resets the menu so it's state and everything can be used again without
+ * creating a new one.
+ *
+ * @param menu The menu to be reset
+ * 
+ * @return 1 if the menu was well reset, 0 otherwise
+*/
+int menu_reset(struct menu* menu);
 
 #endif
