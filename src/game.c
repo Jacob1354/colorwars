@@ -83,7 +83,7 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
     int i;
     struct sprite* sprite;
     for(i = 0; i < GAME_BOARD_H * GAME_BOARD_W; i++) {
-        sprite = sprite_create(ss, 0,
+        sprite = sprite_create(ss, PLAYER_NONE * GAME_BOX_SPRITE_NUM_COLS,
                 x_og + ((i - i/GAME_BOARD_H*GAME_BOARD_W) * dim[0]),
                 y_og + ((i/GAME_BOARD_H) * dim[1]),
                 dim[0], dim[1]);
