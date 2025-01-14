@@ -60,6 +60,10 @@ int init_grid(struct game* game) {
         printf(ERR_MSG_ALLOC, "game->grid");
         return 0;
     }
+    if(game->renderer == NULL) {
+        printf("game.c:init_grid: game renderer is NULL\n");
+        return 0;
+    }
     struct spritesheet* ss = spritesheet_create(GAME_BOX_SPRITE_PATH,
             GAME_BOX_SPRITE_NUM_ROWS, GAME_BOX_SPRITE_NUM_COLS, 
             GAME_BOX_SPRITE_NUM_SPRITES, game->renderer);
