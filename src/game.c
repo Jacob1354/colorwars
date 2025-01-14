@@ -196,7 +196,23 @@ int game_render_grid(struct game* game) {
 void game_delete(struct game* game) {
     if(game != NULL) {
         if(game->grid != NULL) {
-            int i;
+            int i = 0;
+            int spritesheet_deleted = 0;
+            //deletes spritesheet
+            while(i < game->width * game->height
+                    && !spritesheet_deleted) {
+                if(game->grid[i] != NULL) {
+                    if(game->grid[i]->sprite != NULL) {
+                        if(game->grid[i]->sprite->spritesheet != NULL) {
+                            spritesheet_delete(
+                                    game->grid[i]->sprite->spritesheet
+                                    );
+                            spritesheet_deleted = 1;
+                        }
+                    }
+                }
+            }
+            //frees grid's boxes
             for(i = 0; i < game->width * game->height; i++)
                 if(game->grid[i] != NULL) 
                     box_free(game->grid[i]);
@@ -207,7 +223,6 @@ void game_delete(struct game* game) {
 
 void box_free(struct box* box) {
     if(box != NULL && box->sprite != NULL) {
-        spritesheet_delete(box->sprite->spritesheet);
         sprite_delete(box->sprite);
     }
     free(box);
