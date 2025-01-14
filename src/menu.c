@@ -180,8 +180,6 @@ void menu_run(struct menu* menu) {
                     update_sprites(menu);
             menu_render(menu);
         }
-        if(menu->state == MENU_STATE_PLAY) //Just so it doesn't crash for now
-            menu->state = MENU_STATE_QUIT;
     }
 }
 

@@ -58,6 +58,7 @@ void application_run(struct application *app) {
                         app->renderer);
                 if(app->game != NULL)
                     game_run(app->game);
+                game_delete(app->game);
                 app->state = APPLICATION_STATE_MENU;
                 break;
             case APPLICATION_STATE_QUIT:

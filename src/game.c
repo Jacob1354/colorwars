@@ -115,6 +115,7 @@ void game_run(struct game* game) {
         while(game->state != GAME_STATE_QUIT) {
             event_loop(game);
             game_render(game);
+            game->state = GAME_STATE_QUIT;
         }
     }
 }
@@ -128,8 +129,8 @@ void event_loop(struct game* game) {
                     game->state = GAME_STATE_FORCE_QUIT;
                     break;
                 case(SDL_MOUSEBUTTONDOWN):
-                    if(e.button.button == SDL_BUTTON_LEFT)
-                        game_click(game);
+                    //if(e.button.button == SDL_BUTTON_LEFT)
+                        //game_click(game);
                 default:
             }
         }
