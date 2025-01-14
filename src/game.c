@@ -142,12 +142,15 @@ void event_loop(struct game* game) {
 
 void game_render(struct game* game) {
     if(game != NULL) {
-        Uint8 r, g, b;
-        game_set_background_color(game, &r, &g, &b);
-        SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
-        SDL_RenderClear(game->renderer);
-        if(game_render_grid(game) != 1)
-            printf("Unable to properly render game grid\n");
+        if(game->renderer != NULL) {
+            Uint8 r, g, b;
+            game_set_background_color(game, &r, &g, &b);
+            SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
+            SDL_RenderClear(game->renderer);
+            if(game_render_grid(game) != 1)
+                printf("Unable to properly render game grid\n");
+            SDL_RenderPresent(game->renderer);
+        }
     }
 }
 
