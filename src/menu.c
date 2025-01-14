@@ -314,6 +314,21 @@ void menu_delete(struct menu* menu) {
     free(menu);
 }
 
+//Menu reset
+int menu_reset(struct menu* menu) {
+    if(menu == NULL) {
+        printf("Cannot reset NULL menu\n");
+        return 0;
+    }
+    menu->state = MENU_STATE_NONE;
+    int i;
+    for(i = 0; i < menu->sprite_nb; i++)
+        if(menu->sprites[i] != NULL)
+            if(i != SPRITE_PLAYERS_DIGIT 
+                    && i != SPRITE_BOTS_DIGIT)
+                menu->sprites[i]->sprite_pos = 0;
+    return 1;
+}
 
 
 
