@@ -303,7 +303,14 @@ void menu_delete(struct menu* menu) {
     int i;
     if(menu->sprites != NULL)
         for(i=0; i < menu->sprite_nb; i++)
-            free(menu->sprites[i]);
+            if(menu->sprites[i] != NULL 
+                    && menu->sprites[i]->spritesheet != NULL) {
+                //After SPRITE_NB_BOTS are pairs of sprites using the same
+                //spritesheet. Therefore, must only free one out of 2
+                if(i < SPRITE_NB_BOTS || i%2 == 0)
+                    spritesheet_delete(menu->sprites[i]->spritesheet);
+                free(menu->sprites[i]);
+            }
     free(menu);
 }
 
