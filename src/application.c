@@ -49,6 +49,7 @@ void application_run(struct application *app) {
                         app->state = APPLICATION_STATE_QUIT;
                     else if(app->menu->state == MENU_STATE_PLAY)
                         app->state = APPLICATION_STATE_PLAY;
+                    menu_reset(app->menu);
                 }
                 break;
             case APPLICATION_STATE_PLAY:
