@@ -38,6 +38,7 @@ struct game* game_create(int width, int height, int players_nb,
         printf("game_create : Rederer is null, unable to create game\n");
         return NULL;
     }
+    game->renderer = renderer;
     if(init_grid(game) == 1) { 
         game->state = GAME_STATE_PLAY;
         game->player_turn = PLAYER_PINK;
@@ -45,7 +46,6 @@ struct game* game_create(int width, int height, int players_nb,
         game->height = height;
         game->players_nb = players_nb;
         game->bots_nb = bots_nb;
-        game->renderer = renderer;
     }
     return game;
 }
