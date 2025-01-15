@@ -22,7 +22,7 @@ void box_free(struct box* box);
 //==========================================================
 void event_loop(struct game* game);
 void game_click(struct game* game);
-int find_box_hovered(struct box** grid);
+int find_box_hovered(struct game* game);
 void upgrade_grid(struct box** grid, int box_index);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
@@ -144,14 +144,30 @@ void event_loop(struct game* game) {
 void game_click(struct game* game) {
     if(game != NULL) {
         if(game->grid != NULL) {
-            int box_index = find_box_hovered(game->grid);
+            int box_index = find_box_hovered(game);
             if(box_index >= 0)
                 upgrade_grid(game->grid, box_index);
         } else printf("game.c:game_click: game->grid is NULL\n");
     } else printf("game.c:game_click: game is NULL\n");
 }
-int find_box_hovered(struct box** grid) {
-    return 0;
+int find_box_hovered(struct game* game) {
+    int hovering = -1;
+            int i = 0; 
+    if(game != NULL) {
+        if(game->grid != NULL) {
+            //Not most efficient, but for the size of the grid, it's okay
+            while(i < game->width * game->height && hovering < 0) {
+                if(game->grid[i] != NULL) {
+                    if(is_mouse_hovering(game->grid[i]->sprite))
+                        hovering = i;
+                } else printf("game.c::find_box_hovered: game->grid[%i] is "
+                        "NULL\n", i);
+                i++;
+            }
+        } else printf("game.c::find_box_hovered: game->grid is NULL\n");
+    } else printf("game.c::find_box_hovered: game is NULL\n");
+    printf("hovering box[%i][%i]\n",i - i/GAME_BOARD_H*GAME_BOARD_W,i/GAME_BOARD_H);
+    return hovering;
 }
 void upgrade_grid(struct box** grid, int box_index) {
 }
