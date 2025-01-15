@@ -27,6 +27,10 @@ void upgrade_grid(struct game* game, int box_index);
 void update_box_sprite(struct box* box);
 void next_player(struct game* game);
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count);
+
+//Explodes a box of the game and increases next_boxes_counter by the number
+//of boxes touched by the exlosion that reached the max number of points or more
+int explode_box(struct game* game, int box_index, int* next_boxes_counter);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
@@ -222,7 +226,17 @@ void next_player(struct game* game) {
 
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
     if(game != NULL && boxes_indexes != NULL && box_count > 0) {
-
+        int next_box_count = 0;
+        int* next_boxes_indexes = malloc(
+                sizeof(int) * game->width * game->height
+                );
+        int i;
+        for(i = 0; i < box_count; i++) {
+            explode_box(game, 
+                    boxes_indexes[i],
+                    next_boxes_indexes);
+        }
+        explode_boxes(game, next_boxes_indexes, next_box_count);
     }
 }
 
