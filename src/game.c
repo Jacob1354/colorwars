@@ -46,6 +46,7 @@ struct game* game_create(int width, int height, int players_nb,
     if(init_grid(game) == 1) { 
         game->state = GAME_STATE_PLAY;
         game->player_turn = PLAYER_PINK;
+        game->turn = 1;
         game->players_nb = players_nb;
         game->bots_nb = bots_nb;
     }

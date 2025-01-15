@@ -37,6 +37,7 @@ struct game {
     int players_nb;
     int bots_nb;
     enum player player_turn;
+    int turn;
     struct box** grid;
     SDL_Renderer* renderer;
 };
