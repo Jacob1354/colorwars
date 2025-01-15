@@ -22,10 +22,11 @@ void box_free(struct box* box);
 //==========================================================
 void event_loop(struct game* game);
 void game_click(struct game* game);
+int find_box_hovered(struct box** grid);
+void upgrade_grid(struct box** grid, int box_index);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
-
 
 struct game* game_create(int width, int height, int players_nb, 
         int bots_nb, SDL_Renderer* renderer) {
@@ -133,12 +134,28 @@ void event_loop(struct game* game) {
                     break;
                 case(SDL_MOUSEBUTTONDOWN):
                     if(e.button.button == SDL_BUTTON_LEFT)
-                        game->state = GAME_STATE_QUIT;//game_click(game);
+                        game_click(game);
                 default:
             }
         }
     }
 }
+
+void game_click(struct game* game) {
+    if(game != NULL) {
+        if(game->grid != NULL) {
+            int box_index = find_box_hovered(game->grid);
+            if(box_index >= 0)
+                upgrade_grid(game->grid, box_index);
+        } else printf("game.c:game_click: game->grid is NULL\n");
+    } else printf("game.c:game_click: game is NULL\n");
+}
+int find_box_hovered(struct box** grid) {
+    return 0;
+}
+void upgrade_grid(struct box** grid, int box_index) {
+}
+
 
 void game_render(struct game* game) {
     if(game != NULL) {
