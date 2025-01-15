@@ -198,6 +198,33 @@ void upgrade_grid(struct game* game, int box_index) {
 
 }
 
+void update_box_sprite(struct box* box) {
+    if(box != NULL) {
+        if(box->sprite != NULL) {
+            if(box->points < 0 || box->points > GAME_BOX_MAX_POINTS)
+                printf("game.c::update_box_sprite: Warning! box->points" 
+                        " is either smaller than 0 or bigger than the"
+                        " max quantity\n");
+            if(box->points == 0 || box->player == PLAYER_NONE)
+                box->sprite->sprite_pos =
+                    PLAYER_NONE * GAME_BOX_SPRITE_NUM_COLS; 
+            else
+                box->sprite->sprite_pos =
+                    box->player*GAME_BOX_SPRITE_NUM_COLS + box->points-1;
+        } else printf("game.c::update_box_sprite: box->sprite is NULL\n");
+    } else printf("game.c::update_box_sprite: box is NULL\n");
+}
+void next_player(struct game* game) {
+    if(game != NULL) {
+        game->player_turn = (game->player_turn + 1) % game->players_nb;
+    } else printf("game.c::next_player: game is NULL\n");
+}
+
+void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
+    if(game != NULL && boxes_indexes != NULL && box_count > 0) {
+
+    }
+}
 
 void game_render(struct game* game) {
     if(game != NULL) {
