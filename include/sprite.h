@@ -57,6 +57,6 @@ void sprite_delete(struct sprite* sprite);
  *
  * @return 1 if mouse is hovering, 0 if not hovering, -1 if sprite is NULL
 */
-int is_mouse_hovering(struct sprite* sprite);
+int sprite_is_hovered(struct sprite* sprite);
 
 #endif

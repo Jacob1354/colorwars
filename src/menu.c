@@ -243,17 +243,17 @@ void menu_render(struct menu* menu) {
 int update_menu_focus_state(struct menu* menu) {
     if(menu != NULL) {
         enum menu_state old_state = menu->state;
-        if(is_mouse_hovering(menu->sprites[SPRITE_PLAY]))
+        if(sprite_is_hovered(menu->sprites[SPRITE_PLAY]))
             menu->state = MENU_STATE_PLAY_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_QUIT]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_QUIT]))
             menu->state = MENU_STATE_QUIT_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
             menu->state = MENU_STATE_PLAYERS_UP_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
             menu->state = MENU_STATE_PLAYERS_DOWN_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_UP]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_BOTS_ARROW_UP]))
             menu->state = MENU_STATE_BOTS_UP_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
             menu->state = MENU_STATE_BOTS_DOWN_FOCUS;
         else menu->state = MENU_STATE_NONE;
         return old_state != menu->state;

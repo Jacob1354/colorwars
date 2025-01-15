@@ -40,7 +40,7 @@ void sprite_delete(struct sprite* sprite) {
 }
 
 
-int is_mouse_hovering(struct sprite* sprite) {
+int sprite_is_hovered(struct sprite* sprite) {
     if(sprite == NULL) {
         printf("Sprite is NULL\n");
         return -1;

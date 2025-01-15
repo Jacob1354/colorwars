@@ -158,7 +158,7 @@ int find_box_hovered(struct game* game) {
             //Not most efficient, but for the size of the grid, it's okay
             while(i < game->width * game->height && hovering < 0) {
                 if(game->grid[i] != NULL) {
-                    if(is_mouse_hovering(game->grid[i]->sprite))
+                    if(sprite_is_hovered(game->grid[i]->sprite))
                         hovering = i;
                 } else printf("game.c::find_box_hovered: game->grid[%i] is "
                         "NULL\n", i);
