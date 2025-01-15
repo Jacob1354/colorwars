@@ -77,16 +77,16 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
     unsigned int dim[2];
     if(get_png_dimensions(GAME_BOX_SPRITE_PATH, dim) != 1)
         return 0;
-    dim[0] = dim[0]/GAME_BOX_SPRITE_NUM_COLS;
-    dim[1] = dim[1]/GAME_BOX_SPRITE_NUM_ROWS;
-    int x_og = (WND_W - game->width * dim[0])/2;
-    int y_og = (WND_H - game->height * dim[1])/2;
+    int x_0 = (WND_W - game->width * dim[0]/GAME_BOX_SPRITE_NUM_COLS)/2;
+    int y_0 = (WND_H - game->height * dim[1]/GAME_BOX_SPRITE_NUM_ROWS)/2;
     int i;
     struct sprite* sprite;
     for(i = 0; i < GAME_BOARD_H * GAME_BOARD_W; i++) {
         sprite = sprite_create(ss, PLAYER_NONE * GAME_BOX_SPRITE_NUM_COLS,
-                x_og + ((i - i/GAME_BOARD_H*GAME_BOARD_W) * dim[0]),
-                y_og + ((i/GAME_BOARD_H) * dim[1]),
+                x_0 + //x_0 + x_pos_in_grid * box_width
+                ((i - i/GAME_BOARD_H*GAME_BOARD_W) * dim[0]/GAME_BOX_SPRITE_NUM_COLS),
+                y_0 + //y_0 + y_pos_in_grid * box_heigth
+                ((i/GAME_BOARD_H) * dim[1]/GAME_BOX_SPRITE_NUM_ROWS),
                 dim[0], dim[1]);
         if(sprite == NULL)
             return 0;
