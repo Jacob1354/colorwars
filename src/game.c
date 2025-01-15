@@ -5,6 +5,8 @@
 #include "../include/spritesheet.h"
 #include "../include/img_reader.h"
 
+//Data structures
+//==========================================================
 
 //Game creation functinos
 //==========================================================
@@ -28,9 +30,16 @@ void update_box_sprite(struct box* box);
 void next_player(struct game* game);
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count);
 
-//Explodes a box of the game and increases next_boxes_counter by the number
+//Explodes a box of the game and increases next_boxes_count by the number
 //of boxes touched by the exlosion that reached the max number of points or more
-int explode_box(struct game* game, int box_index, int* next_boxes_counter);
+void explode_box(struct game* game, int box_index, 
+        int* next_boxes_indexes, int* next_boxes_count);
+
+//Applies consequences of a near box_eplosion : add 1 point(and block to max nb
+//of point) and change player to current game_player. If max number of points is
+//reached, then it is added to next_boxes_indexes and it increases the counter.
+void update_box_from_collision(struct game* game, int box_index,
+        int* next_boxes_indexes, int* next_boxes_count); 
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
@@ -226,7 +235,7 @@ void next_player(struct game* game) {
 
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
     if(game != NULL && boxes_indexes != NULL && box_count > 0) {
-        int next_box_count = 0;
+        int next_boxes_count = 0;
         int* next_boxes_indexes = malloc(
                 sizeof(int) * game->width * game->height
                 );
@@ -234,11 +243,33 @@ void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
         for(i = 0; i < box_count; i++) {
             explode_box(game, 
                     boxes_indexes[i],
-                    next_boxes_indexes);
+                    next_boxes_indexes,
+                    &next_boxes_count);
         }
-        explode_boxes(game, next_boxes_indexes, next_box_count);
+        explode_boxes(game, next_boxes_indexes, next_boxes_count);
     }
 }
+
+void explode_box(struct game* game, int box_index, 
+        int* next_boxes_indexes, int* next_boxes_count) {
+    //Checks box above
+    if(box_index > GAME_BOARD_W - 1)
+        update_box_from_collision(game, box_index - (game->width-1), 
+                next_boxes_indexes, next_boxes_count);
+    //Checks box under
+    if(box_index < GAME_BOARD_W * (GAME_BOARD_H-1) - 1)
+        update_box_from_collision(game, box_index - (game->width-1),
+                next_boxes_indexes, next_boxes_count);
+    //Checks box to the left
+    if(box_index % GAME_BOARD_W != 0)
+        update_box_from_collision(game, -1, 
+                next_boxes_indexes, next_boxes_count);
+    //Checks box to the right
+    if(box_index % GAME_BOARD_W != GAME_BOARD_W - 1)
+        update_box_from_collision(game, 1, 
+                next_boxes_indexes, next_boxes_count);
+}
+
 
 void game_render(struct game* game) {
     if(game != NULL) {
