@@ -23,7 +23,8 @@ void box_free(struct box* box);
 void event_loop(struct game* game);
 void game_click(struct game* game);
 int find_box_hovered(struct game* game);
-void upgrade_grid(struct box** grid, int box_index);
+void upgrade_grid(struct game* game, int box_index);
+void explode_boxes(struct game* game, int* boxes_indexes, int box_count);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
@@ -146,7 +147,7 @@ void game_click(struct game* game) {
         if(game->grid != NULL) {
             int box_index = find_box_hovered(game);
             if(box_index >= 0)
-                upgrade_grid(game->grid, box_index);
+                upgrade_grid(game, box_index);
         } else printf("game.c:game_click: game->grid is NULL\n");
     } else printf("game.c:game_click: game is NULL\n");
 }
@@ -166,10 +167,23 @@ int find_box_hovered(struct game* game) {
             }
         } else printf("game.c::find_box_hovered: game->grid is NULL\n");
     } else printf("game.c::find_box_hovered: game is NULL\n");
-    printf("hovering box[%i][%i]\n",i - i/GAME_BOARD_H*GAME_BOARD_W,i/GAME_BOARD_H);
     return hovering;
 }
-void upgrade_grid(struct box** grid, int box_index) {
+void upgrade_grid(struct game* game, int box_index) {
+    if(game != NULL) {
+        if(game->grid != NULL) {
+            if(game->grid[box_index] != NULL) {
+                game->grid[box_index]->points++;
+                if(game->grid[box_index]->points >= GAME_BOX_MAX_POINTS) {
+                    int boxes[1] = {box_index};
+                    explode_boxes(game, boxes, 1);
+                }
+            } else printf("game.c:upgrade_grid: game->grid[%i] is NULL\n",
+                    box_index);
+        } else printf("game.c:upgrade_grid: game->grid is NULL\n");
+
+    } else printf("game.c:upgrade_grid: game is NULL\n");
+
 }
 
 
