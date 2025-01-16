@@ -11,6 +11,11 @@
 //Game creation functinos
 //==========================================================
 
+//Fills game, return 1 if worked, 0 otherwise
+int game_fill(struct game* game, SDL_Renderer* renderer, int width,
+        int height, int players_nb, int bots_nb);
+//Loads gameover sprite, return 1 if worked, 0 otherwise
+int load_gameover(struct game* game, SDL_Renderer* renderer);
 //Initialize the game grid. Returns 1 if worked, -1 if game was NULL, 0
 //otherwise
 int init_grid(struct game* game); 
@@ -57,7 +62,20 @@ struct game* game_create(int width, int height, int players_nb,
         printf("game_create : Rederer is null, unable to create game\n");
         return NULL;
     }
+    if(game_fill(game, renderer, width, height, players_nb, bots_nb) != 1)
+        return NULL;
+    return game;
+}
+
+int game_fill(struct game* game, SDL_Renderer* renderer, int width,
+        int height, int players_nb, int bots_nb) {
+    if(game == NULL) {
+        printf("game.c::game_fill: game is NULL\n");
+        return 0;
+    }
     game->renderer = renderer;
+    if(load_gameover(game, renderer) != 1)
+        return 0;
     game->width = width;
     game->height = height;
     if(init_grid(game) == 1) { 
@@ -66,9 +84,10 @@ struct game* game_create(int width, int height, int players_nb,
         game->turn = 1;
         game->players_nb = players_nb;
         game->bots_nb = bots_nb;
-    }
-    return game;
+    } else return 0;
+    return 1;
 }
+
 
 int init_grid(struct game* game) {
     if(game == NULL) {
