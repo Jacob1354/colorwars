@@ -88,6 +88,21 @@ int game_fill(struct game* game, SDL_Renderer* renderer, int width,
     return 1;
 }
 
+int load_gameover(struct game* game, SDL_Renderer* renderer) {
+    if(game == NULL) {
+        printf("game.c::load_gameover: game is NULL\n");
+        return 0;
+    }
+    struct spritesheet* ss = spritesheet_create(
+            GAME_GAMEOVER_SPRITE_PATH,
+            GAME_GAMEOVER_SPRITE_NUM_ROWS,
+            GAME_GAMEOVER_SPRITE_NUM_COLS,
+            GAME_BOX_SPRITE_NUM_SPRITES,
+            renderer);
+    game->sprite_gameover = sprite_create(ss, 0, 0, 0, 
+            GAME_BOARD_W, GAME_BOARD_H);
+    return game->sprite_gameover != NULL;
+}
 
 int init_grid(struct game* game) {
     if(game == NULL) {
