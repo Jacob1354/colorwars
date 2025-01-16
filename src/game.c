@@ -291,6 +291,7 @@ void update_box_from_collision(struct game* game, int box_index,
                     printf("game.c::update_box_from_collision: box_index"
                             " out of bounds\n");
             }
+            update_box_sprite(game->grid[box_index]);
         } else printf("game.c::update_box_from_collision: var related to"
                " next_boxes is NULL\n");
     } else printf("game.c::update_box_from_collision: game or grid is NULL\n");
