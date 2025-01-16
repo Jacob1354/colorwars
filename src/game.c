@@ -257,20 +257,22 @@ void explode_box(struct game* game, int box_index,
         int* next_boxes_indexes, int* next_boxes_count) {
     //Checks box above
     if(box_index > GAME_BOARD_W - 1)
-        update_box_from_collision(game, box_index - (game->width-1), 
+        update_box_from_collision(game, box_index - (game->width), 
                 next_boxes_indexes, next_boxes_count);
     //Checks box under
     if(box_index < GAME_BOARD_W * (GAME_BOARD_H-1) - 1)
-        update_box_from_collision(game, box_index - (game->width-1),
+        update_box_from_collision(game, box_index + (game->width),
                 next_boxes_indexes, next_boxes_count);
     //Checks box to the left
     if(box_index % GAME_BOARD_W != 0)
-        update_box_from_collision(game, -1, 
+        update_box_from_collision(game, box_index - 1, 
                 next_boxes_indexes, next_boxes_count);
     //Checks box to the right
     if(box_index % GAME_BOARD_W != GAME_BOARD_W - 1)
-        update_box_from_collision(game, 1, 
+        update_box_from_collision(game, box_index + 1, 
                 next_boxes_indexes, next_boxes_count);
+    if(game != NULL && game->grid != NULL)
+        box_reset(game->grid[box_index]);
 }
 
 void update_box_from_collision(struct game* game, int box_index,
