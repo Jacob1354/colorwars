@@ -295,7 +295,11 @@ void update_box_from_collision(struct game* game, int box_index,
 }
 
 void box_reset(struct box* box) {
-
+    if(box != NULL) {
+        box->points = 0;
+        box->player = PLAYER_NONE;
+        update_box_sprite(box);
+    } else printf("game.c::box_reset: box is NULL\n");
 }
 void game_render(struct game* game) {
     if(game != NULL) {
