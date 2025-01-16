@@ -214,10 +214,9 @@ void update_grid(struct game* game, int box_index) {
                         int boxes[1] = {box_index};
                         explode_boxes(game, boxes, 1);
                     }
-                    Uint32 s_time = SDL_GetTicks();
-                    while(SDL_GetTicks() - s_time  < 600)
-                        game_render(game);
                     update_box_sprite(game->grid[box_index]);
+                    game_render(game);
+                    SDL_Delay(300);
                     next_player(game);
                 }
             } else printf("game.c:update_grid: game->grid[%i] is NULL\n",
@@ -266,9 +265,8 @@ void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
                     &next_boxes_count);
         }
         if(next_boxes_count > 0) {
-            Uint32 start_t = SDL_GetTicks();
-            while(SDL_GetTicks() - start_t < 600)
-                game_render(game);
+            game_render(game);
+            SDL_Delay(600);
             explode_boxes(game, next_boxes_indexes, next_boxes_count);
         }
     }
