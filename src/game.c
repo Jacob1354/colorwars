@@ -214,6 +214,9 @@ void update_grid(struct game* game, int box_index) {
                         int boxes[1] = {box_index};
                         explode_boxes(game, boxes, 1);
                     }
+                    Uint32 s_time = SDL_GetTicks();
+                    while(SDL_GetTicks() - s_time  < 600)
+                        game_render(game);
                     update_box_sprite(game->grid[box_index]);
                     next_player(game);
                 }
@@ -262,8 +265,12 @@ void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
                     next_boxes_indexes,
                     &next_boxes_count);
         }
-        if(next_boxes_count > 0)
+        if(next_boxes_count > 0) {
+            Uint32 start_t = SDL_GetTicks();
+            while(SDL_GetTicks() - start_t < 600)
+                game_render(game);
             explode_boxes(game, next_boxes_indexes, next_boxes_count);
+        }
     }
 }
 
