@@ -41,6 +41,7 @@ void explode_box(struct game* game, int box_index,
 void update_box_from_collision(struct game* game, int box_index,
         int* next_boxes_indexes, int* next_boxes_count); 
 void box_reset(struct box* box);
+int game_ended(struct game* game);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
@@ -186,6 +187,7 @@ int find_box_hovered(struct game* game) {
     } else printf("game.c::find_box_hovered: game is NULL\n");
     return hovering;
 }
+
 void update_grid(struct game* game, int box_index) {
     if(game != NULL) {
         if(game->grid != NULL) {
@@ -298,7 +300,6 @@ void update_box_from_collision(struct game* game, int box_index,
                " next_boxes is NULL\n");
     } else printf("game.c::update_box_from_collision: game or grid is NULL\n");
 }
-
 void box_reset(struct box* box) {
     if(box != NULL) {
         box->points = 0;
@@ -306,6 +307,27 @@ void box_reset(struct box* box) {
         update_box_sprite(box);
     } else printf("game.c::box_reset: box is NULL\n");
 }
+
+int game_ended(struct game* game) {
+    int i = 0, game_ended = 0;
+    if(game != NULL && game->grid != NULL) {
+        game_ended = 1;
+        enum player player = PLAYER_NONE;
+        while(game_ended && i < game->width * game->height) {
+            if(game->grid[i] != NULL) {
+                if(player == PLAYER_NONE) {
+                        player = game->grid[i]->player;
+                } else if(game->grid[i]->player != PLAYER_NONE
+                        && game->grid[i]->player != player) {
+                    game_ended = 0;
+                }
+            }
+            i++;
+        }
+    }
+    return game_ended;    
+}
+
 void game_render(struct game* game) {
     if(game != NULL) {
         if(game->renderer != NULL) {
