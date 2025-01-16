@@ -180,8 +180,6 @@ void menu_run(struct menu* menu) {
                     update_sprites(menu);
             menu_render(menu);
         }
-        if(menu->state == MENU_STATE_PLAY) //Just so it doesn't crash for now
-            menu->state = MENU_STATE_QUIT;
     }
 }
 
@@ -245,17 +243,17 @@ void menu_render(struct menu* menu) {
 int update_menu_focus_state(struct menu* menu) {
     if(menu != NULL) {
         enum menu_state old_state = menu->state;
-        if(is_mouse_hovering(menu->sprites[SPRITE_PLAY]))
+        if(sprite_is_hovered(menu->sprites[SPRITE_PLAY]))
             menu->state = MENU_STATE_PLAY_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_QUIT]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_QUIT]))
             menu->state = MENU_STATE_QUIT_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_PLAYERS_ARROW_UP]))
             menu->state = MENU_STATE_PLAYERS_UP_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_PLAYER_ARROW_DOWN]))
             menu->state = MENU_STATE_PLAYERS_DOWN_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_UP]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_BOTS_ARROW_UP]))
             menu->state = MENU_STATE_BOTS_UP_FOCUS;
-        else if(is_mouse_hovering(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
+        else if(sprite_is_hovered(menu->sprites[SPRITE_BOTS_ARROW_DOWN]))
             menu->state = MENU_STATE_BOTS_DOWN_FOCUS;
         else menu->state = MENU_STATE_NONE;
         return old_state != menu->state;
@@ -305,10 +303,32 @@ void menu_delete(struct menu* menu) {
     int i;
     if(menu->sprites != NULL)
         for(i=0; i < menu->sprite_nb; i++)
-            free(menu->sprites[i]);
+            if(menu->sprites[i] != NULL 
+                    && menu->sprites[i]->spritesheet != NULL) {
+                //After SPRITE_NB_BOTS are pairs of sprites using the same
+                //spritesheet. Therefore, must only free one out of 2
+                if(i < SPRITE_NB_BOTS || i%2 == 0)
+                    spritesheet_delete(menu->sprites[i]->spritesheet);
+                free(menu->sprites[i]);
+            }
     free(menu);
 }
 
+//Menu reset
+int menu_reset(struct menu* menu) {
+    if(menu == NULL) {
+        printf("Cannot reset NULL menu\n");
+        return 0;
+    }
+    menu->state = MENU_STATE_NONE;
+    int i;
+    for(i = 0; i < menu->sprite_nb; i++)
+        if(menu->sprites[i] != NULL)
+            if(i != SPRITE_PLAYERS_DIGIT 
+                    && i != SPRITE_BOTS_DIGIT)
+                menu->sprites[i]->sprite_pos = 0;
+    return 1;
+}
 
 
 

@@ -29,7 +29,17 @@
 
 
 //Game constants
-
+#define GAME_BOARD_W 8
+#define GAME_BOARD_H 8
+#define GAME_BOX_SPRITE_PATH "./assets/game/box.png"
+#define GAME_BOX_SPRITE_NUM_COLS 4
+#define GAME_BOX_SPRITE_NUM_ROWS 5
+#define GAME_BOX_SPRITE_NUM_SPRITES 21
+#define GAME_BOX_MAX_POINTS 4
+#define GAME_GAMEOVER_SPRITE_PATH "./assets/game/gameover.png"
+#define GAME_GAMEOVER_SPRITE_NUM_COLS 2
+#define GAME_GAMEOVER_SPRITE_NUM_ROWS 2
+#define GAME_GAMEOVER_SPRITE_NUM_SPRITES 4
 
 //Game macros
 

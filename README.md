@@ -1,9 +1,10 @@
 # Colorwars
 
 ## Current State
-Although the game (except the bots) was supposed to be completed by the 12
-january, an issue problem occured, slowing down the second sprint. The second
-sprint (the game itself) should be done by the end of the week.
+
+Currently, although the program hasn't been thorougly tested, it should be
+working, except for the bots part. Moreover, as mentionned, the testing hasn't
+been done yet. Also, there is need for maintenance since game.c is an ugly mess.
 
 ## Description
 This program is a simple video game where up to 4 players play agains one
@@ -62,14 +63,45 @@ the left mouse button will do trigger the button.
 
 ### Game Controls
 
+The in-game controls are the same : the mouse left click. Here's are the game
+work. 
+
+### First turn
+
+During the first turn, the players can click on any unoccupied box to set
+it's first circle. The circle in question will have three dots, meaning it's
+gonna explode on the player's next turn. PLayers play one after the other. The
+screen background color is the one of the player currently playing. The four
+possible colors are pink, cyan, green, yellow.
+
+![GIF example of the game's first turn](assets/doc/game_example_first_turn.gif)
+
+### Rest of the game
+
+For the rest of the game, players can only click on their own circles. If they
+click elsewhere, nothing will happen. When they click on a box they own, a dot
+will be added. If the circle reaches four dots, it explodes, sending one dot to
+the four boxes surrounding it and taking ownership of them. If the boxes hit by
+the explosion reach for dots, they explode. When a box eplodes, it becomes a
+empty box again.
+
+Example of a chained explosion :
+![GIF example of a chainde explosion](assets/doc/game_example_chained_explosion.gif)
+
 
 ## Bot system
 
+Not implemented yet
 
 ## Improvements
 
+Many improvements are needed. Here's a list of a few ideas :
 
-
+ 1. Adding the bots (obviously)
+ 2. Optimizing performance
+ 3. Adding sound
+ 4. Adding music
+ 5. Adding an option to return to menu instead while in game
 
 
 
