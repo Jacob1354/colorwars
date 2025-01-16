@@ -152,8 +152,12 @@ void event_loop(struct game* game) {
                     game->state = GAME_STATE_FORCE_QUIT;
                     break;
                 case(SDL_MOUSEBUTTONDOWN):
-                    if(e.button.button == SDL_BUTTON_LEFT)
-                        game_click(game);
+                    if(e.button.button == SDL_BUTTON_LEFT) {
+                        if(game->state == GAME_STATE_PLAY)
+                            game_click(game);
+                        else if(game->state == GAME_STATE_GAME_OVER)
+                            game->state = GAME_STATE_QUIT;
+                     }
                 default:
             }
         }
@@ -164,8 +168,13 @@ void game_click(struct game* game) {
     if(game != NULL) {
         if(game->grid != NULL) {
             int box_index = find_box_hovered(game);
-            if(box_index >= 0)
+            if(box_index >= 0) {
                 update_grid(game, box_index);
+                if((game->turn-1)/game->players_nb > 0 // Checks if first turn
+                        && game_ended(game))
+                    game->state = GAME_STATE_GAME_OVER;
+            }
+
         } else printf("game.c:game_click: game->grid is NULL\n");
     } else printf("game.c:game_click: game is NULL\n");
 }
