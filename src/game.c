@@ -387,12 +387,16 @@ int game_ended(struct game* game) {
 void game_render(struct game* game) {
     if(game != NULL) {
         if(game->renderer != NULL) {
-            Uint8 r, g, b;
-            game_set_background_color(game, &r, &g, &b);
-            SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
-            SDL_RenderClear(game->renderer);
-            if(game_render_grid(game) != 1)
-                printf("Unable to properly render game grid\n");
+            if(game->state == GAME_STATE_PLAY) {
+                Uint8 r, g, b;
+                game_set_background_color(game, &r, &g, &b);
+                SDL_SetRenderDrawColor(game->renderer, r, g, b, 255);
+                SDL_RenderClear(game->renderer);
+                if(game_render_grid(game) != 1)
+                    printf("Unable to properly render game grid\n");
+            } else if(game->state == GAME_STATE_GAME_OVER) {
+                sprite_render(game->sprite_gameover);
+            }
             SDL_RenderPresent(game->renderer);
         }
     }
