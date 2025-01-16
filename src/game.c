@@ -205,13 +205,21 @@ void game_click(struct game* game) {
             if(box_index >= 0) {
                 update_grid(game, box_index);
                 if((game->turn-1)/game->players_nb > 0 // Checks if first turn
-                        && game_ended(game))
+                        && game_ended(game)) {
                     game->state = GAME_STATE_GAME_OVER;
+                    (game->player_turn)--;
+                    if(game->player_turn < PLAYER_PINK 
+                            || game->player_turn > PLAYER_NONE)
+                        game->player_turn = game->players_nb - 1;
+                    if(game->sprite_gameover != NULL)
+                        game->sprite_gameover->sprite_pos = game->player_turn;
+                }
             }
 
         } else printf("game.c:game_click: game->grid is NULL\n");
     } else printf("game.c:game_click: game is NULL\n");
 }
+
 int find_box_hovered(struct game* game) {
     int hovering = -1;
             int i = 0; 
