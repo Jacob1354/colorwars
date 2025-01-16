@@ -204,8 +204,8 @@ void update_grid(struct game* game, int box_index) {
                         explode_boxes(game, boxes, 1);
                     }
                     update_box_sprite(game->grid[box_index]);
+                    next_player(game);
                 }
-                game->turn++;
             } else printf("game.c:update_grid: game->grid[%i] is NULL\n",
                     box_index);
         } else printf("game.c:update_grid: game->grid is NULL\n");
