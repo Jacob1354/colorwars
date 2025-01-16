@@ -454,6 +454,8 @@ void game_delete(struct game* game) {
                     }
                 }
             }
+            if(game->sprite_gameover != NULL)
+                spritesheet_delete(game->sprite_gameover->spritesheet);
             //frees grid's boxes
             for(i = 0; i < game->width * game->height; i++)
                 if(game->grid[i] != NULL) 
