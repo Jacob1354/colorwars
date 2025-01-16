@@ -248,7 +248,8 @@ void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
                     next_boxes_indexes,
                     &next_boxes_count);
         }
-        explode_boxes(game, next_boxes_indexes, next_boxes_count);
+        if(next_boxes_count > 0)
+            explode_boxes(game, next_boxes_indexes, next_boxes_count);
     }
 }
 
