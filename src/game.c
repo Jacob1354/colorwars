@@ -280,6 +280,7 @@ void update_box_from_collision(struct game* game, int box_index,
     if(game != NULL && game->grid != NULL) {
         if(next_boxes_indexes != NULL && next_boxes_count != NULL) {
             game->grid[box_index]->points++;
+            game->grid[box_index]->player = game->player_turn;
             if(game->grid[box_index]->points >= GAME_BOX_MAX_POINTS) {
                 game->grid[box_index]->points = GAME_BOX_MAX_POINTS;
                 if(*next_boxes_count < game->width * game->height) {
