@@ -190,7 +190,8 @@ void update_grid(struct game* game, int box_index) {
     if(game != NULL) {
         if(game->grid != NULL) {
             if(game->grid[box_index] != NULL) {
-                if((game->turn-1)/game->players_nb == 0) { //Checks if first turn
+                if((game->turn-1)/game->players_nb == 0 //Checks if first turn
+                        && game->grid[box_index]->player == PLAYER_NONE) {
                     game->grid[box_index]->player = game->player_turn;
                     game->grid[box_index]->points = 3;
                     update_box_sprite(game->grid[box_index]);
