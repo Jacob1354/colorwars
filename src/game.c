@@ -202,6 +202,7 @@ void upgrade_grid(struct game* game, int box_index) {
                         int boxes[1] = {box_index};
                         explode_boxes(game, boxes, 1);
                     }
+                    update_box_sprite(game->grid[box_index]);
                 }
                 game->turn++;
             } else printf("game.c:upgrade_grid: game->grid[%i] is NULL\n",
