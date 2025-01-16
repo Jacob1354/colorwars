@@ -235,7 +235,8 @@ void next_player(struct game* game) {
 }
 
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count) {
-    if(game != NULL && boxes_indexes != NULL && box_count > 0) {
+    if(game != NULL && boxes_indexes != NULL 
+            && box_count > 0 && box_count < game->width * game->height) {
         int next_boxes_count = 0;
         int* next_boxes_indexes = malloc(
                 sizeof(int) * game->width * game->height
