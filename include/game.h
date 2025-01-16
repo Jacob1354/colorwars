@@ -39,6 +39,7 @@ struct game {
     enum player player_turn;
     int turn;
     struct box** grid;
+    struct sprite* sprite_gameover;
     SDL_Renderer* renderer;
 };
 
