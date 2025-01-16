@@ -40,6 +40,7 @@ void explode_box(struct game* game, int box_index,
 //reached, then it is added to next_boxes_indexes and it increases the counter.
 void update_box_from_collision(struct game* game, int box_index,
         int* next_boxes_indexes, int* next_boxes_count); 
+void box_reset(struct box* box);
 void game_render(struct game* game);
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
 int game_render_grid(struct game* game);
@@ -270,7 +271,28 @@ void explode_box(struct game* game, int box_index,
                 next_boxes_indexes, next_boxes_count);
 }
 
+void update_box_from_collision(struct game* game, int box_index,
+        int* next_boxes_indexes, int* next_boxes_count) {
+    if(game != NULL && game->grid != NULL) {
+        if(next_boxes_indexes != NULL && next_boxes_count != NULL) {
+            game->grid[box_index]->points++;
+            if(game->grid[box_index]->points >= GAME_BOX_MAX_POINTS) {
+                game->grid[box_index]->points = GAME_BOX_MAX_POINTS;
+                if(*next_boxes_count < game->width * game->height) {
+                    next_boxes_indexes[*next_boxes_count] = box_index;
+                    (*next_boxes_count)++;
+                } else
+                    printf("game.c::update_box_from_collision: box_index"
+                            " out of bounds\n");
+            }
+        } else printf("game.c::update_box_from_collision: var related to"
+               " next_boxes is NULL\n");
+    } else printf("game.c::update_box_from_collision: game or grid is NULL\n");
+}
 
+void box_reset(struct box* box) {
+
+}
 void game_render(struct game* game) {
     if(game != NULL) {
         if(game->renderer != NULL) {
