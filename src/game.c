@@ -232,6 +232,7 @@ void update_box_sprite(struct box* box) {
 }
 void next_player(struct game* game) {
     if(game != NULL) {
+        game->turn++;
         game->player_turn = (game->player_turn + 1) % game->players_nb;
     } else printf("game.c::next_player: game is NULL\n");
 }
