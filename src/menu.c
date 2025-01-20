@@ -51,12 +51,16 @@ enum sprite_id {
 //=================================================================
 //Generates the menu sprites
 void menu_gen_sprites(struct menu* menu, SDL_Renderer* renderer);
+
 //Retrunrs the number of columns for a sprite ID (hard coded values)
 int find_sprite_cols(enum sprite_id sprite);
+
 //Retuns true if the sprite needs a new sprite sheet
 int need_new_spritesheet(enum sprite_id sprite);
+
 //Returns the path index of MENU_SPRITES_PATHS for the sprite id
 int path_nb(enum sprite_id sprite);
+
 //Returns the position of the sprite relative to the spritesheet (hard coded values)
 int get_sprite_pos(struct menu* menu, enum sprite_id id);
 
@@ -67,14 +71,26 @@ void menu_fill(struct menu* menu, SDL_Renderer* renderer);
 //Menu run fcts
 //=================================================================
 void menu_event_loop(struct menu* menu, SDL_Event e);
+
 //Handles mouse clicks
 void menu_mouse_click(struct menu* menu);
+
+//Change the quantity of players by increment. Does it circularly so 
+//There is always a valid player's quantity
 void menu_change_players_nb(struct menu* menu, int increment);
+
+//Change the quantity of bots by increment. Does it circularly so 
+//There is always a valid quantity of bots
 void menu_change_bots_nb(struct menu* menu, int increment);
+
 void menu_render(struct menu* menu);
+
 //Returns true if there has been a state change
 int update_menu_focus_state(struct menu* menu);
+
+//Update the sprite by changing it's sprite pos
 void update_sprites(struct menu* menu);
+
 //Sets the buttons sprite to their default position
 void set_buttons_to_default(struct menu* menu);
 
