@@ -9,12 +9,12 @@
 #define PNG_CHUNK_TYPE_SIZE 4
 #define PNG_CHUNK_LENGTH_SIZE 4
 
-
+//Fct declarations
 int check_png_signature(FILE* img);
 unsigned int big_to_little_endian(unsigned char bytes[4]);
 
 
-
+//Fct definitions
 int get_png_dimensions(const char* path, unsigned int dim[2]) {
     FILE* img = fopen(path, "r");
     if (img == NULL) {
