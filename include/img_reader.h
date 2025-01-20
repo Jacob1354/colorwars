@@ -2,14 +2,6 @@
 #define IMG_READER_H
 
 
-//PNG consts
-#define PNG_SIGNATURE {137, 80, 78, 71, 13, 10, 26, 10}
-#define PNG_SIGNATURE_SIZE 8
-#define PNG_WIDTH_SIZE 4
-#define PNG_HEIGHT_SIZE 4
-#define PNG_CHUNK_TYPE_SIZE 4
-#define PNG_CHUNK_LENGTH_SIZE 4
-
 /*
  * Fills the array passed as parameter with the dimensions of a png image.
  * First element is the width. Second is the height

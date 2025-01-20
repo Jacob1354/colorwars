@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include "../include/img_reader.h"
 
+//PNG consts
+#define PNG_SIGNATURE {137, 80, 78, 71, 13, 10, 26, 10}
+#define PNG_SIGNATURE_SIZE 8
+#define PNG_WIDTH_SIZE 4
+#define PNG_HEIGHT_SIZE 4
+#define PNG_CHUNK_TYPE_SIZE 4
+#define PNG_CHUNK_LENGTH_SIZE 4
+
 
 int check_png_signature(FILE* img);
 unsigned int big_to_little_endian(unsigned char bytes[4]);
@@ -10,14 +18,14 @@ unsigned int big_to_little_endian(unsigned char bytes[4]);
 int get_png_dimensions(const char* path, unsigned int dim[2]) {
     FILE* img = fopen(path, "r");
     if (img == NULL) {
-        printf("get_png_dimensions : invalid file path\n");
+        printf("img_reader.c::get_png_dimensions: invalid file path\n");
         return -1;
     } if (dim == NULL) {
-        printf("get_png_dimensions : pointer to dimensions array is NULL\n");
+        printf("img_reader.c::get_png_dimensions: pointer to dimensions array is NULL\n");
         return -2;
     }
     if(check_png_signature(img) == -1) {
-        printf("get_png_dimensions : not a png file\n");
+        printf("img_reader.c::get_png_dimensions: not a png file\n");
         return -3;
     }
     fseek(img, PNG_CHUNK_TYPE_SIZE + PNG_CHUNK_LENGTH_SIZE, SEEK_CUR);
