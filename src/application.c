@@ -4,8 +4,9 @@
 //App init fcts
 struct application* init_app(struct application* app);
 
-
-
+//App run fcts
+void application_run_menu(struct application* app);
+void application_run_game(struct application* app);
 
 struct application* application_initialize() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
@@ -43,33 +44,41 @@ void application_run(struct application *app) {
     while(app->state != APPLICATION_STATE_QUIT) {
         switch(app->state) {
             case APPLICATION_STATE_MENU:
-                if(app->menu != NULL) {
-                    menu_run(app->menu); 
-                    if(app->menu->state == MENU_STATE_QUIT)
-                        app->state = APPLICATION_STATE_QUIT;
-                    else if(app->menu->state == MENU_STATE_PLAY)
-                        app->state = APPLICATION_STATE_PLAY;
-                    menu_reset(app->menu);
-                }
+                application_run_menu(app);
                 break;
             case APPLICATION_STATE_PLAY:
-                app->game = game_create(GAME_BOARD_W, GAME_BOARD_H,
-                        app->menu->players_nb,
-                        app->menu->bots_nb,
-                        app->renderer);
-                if(app->game != NULL) {
-                    game_run(app->game);
-                    if(app->game->state == GAME_STATE_FORCE_QUIT)
-                        app->state = APPLICATION_STATE_QUIT;
-                    else if(app->game->state == GAME_STATE_QUIT)
-                        app->state = APPLICATION_STATE_MENU;
-                }
-                game_delete(app->game);
+                application_run_game(app);
                 break;
             case APPLICATION_STATE_QUIT:
             default:
         }
     }
+}
+
+void application_run_menu(struct application* app) {
+    if(app->menu != NULL) {
+        menu_run(app->menu); 
+        if(app->menu->state == MENU_STATE_QUIT)
+            app->state = APPLICATION_STATE_QUIT;
+        else if(app->menu->state == MENU_STATE_PLAY)
+            app->state = APPLICATION_STATE_PLAY;
+        menu_reset(app->menu);
+    }
+}
+
+void application_run_game(struct application* app) {
+    app->game = game_create(GAME_BOARD_W, GAME_BOARD_H,
+            app->menu->players_nb,
+            app->menu->bots_nb,
+            app->renderer);
+    if(app->game != NULL) {
+        game_run(app->game);
+        if(app->game->state == GAME_STATE_FORCE_QUIT)
+            app->state = APPLICATION_STATE_QUIT;
+        else if(app->game->state == GAME_STATE_QUIT)
+            app->state = APPLICATION_STATE_MENU;
+    }
+    game_delete(app->game);
 }
 
 
