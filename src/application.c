@@ -8,6 +8,7 @@ struct application* init_app(struct application* app);
 void application_run_menu(struct application* app);
 void application_run_game(struct application* app);
 
+
 struct application* application_initialize() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
         printf("Unable to initialize sdl");
@@ -20,6 +21,7 @@ struct application* application_initialize() {
     }
     return init_app(app);
 }
+
 
 struct application* init_app(struct application* app) {
     app->state = APPLICATION_STATE_MENU;
