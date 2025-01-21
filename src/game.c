@@ -267,8 +267,8 @@ void game_click(struct game* game) {
             int box_index = find_box_hovered(game);
             if(box_index >= 0) {
                 update_grid(game, box_index);
-                if((game->turn-1)/game->players_nb > 0 // Checks if first turn
-                        && game_ended(game)) {
+                if((game->turn-1)/game->players_nb > 0 // Makes sure it's not
+                        && game_ended(game)) {         // turn 1
                     game->state = GAME_STATE_GAME_OVER;
                     (game->player_turn)--;
                     if(game->player_turn < PLAYER_PINK 
