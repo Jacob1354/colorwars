@@ -32,6 +32,20 @@ int fill_grid(struct game* game, struct spritesheet* spritesheet);
 struct box* box_create(int x, int y, enum player owner, 
         int points, struct sprite* sprite);
 
+/*
+ * Creates and return a sprite for a box's sprite
+ *
+ * @param ss The spritesheet to use
+ * @param i The index of the sprite in the game grid
+ * @param x_0 The x (relative to screen) of the top left corner of the grid
+ * @param y_0 The y (relative to screen) of the top left corner of the grid
+ * @param dims[2] The dimensions of the spritesheet in format {w, h} 
+ * 
+ * @return The sprite created, NULL if unable to create one
+*/
+struct sprite* box_sprite_create(struct spritesheet* ss,
+        int i, int x_0, int y_0, unsigned int dim[2]);
+
 //Game run functions
 //==========================================================
 void event_loop(struct game* game);
@@ -171,18 +185,10 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
     int x_0 = (WND_W - game->width * dim[0]/GAME_BOX_SPRITE_NUM_COLS)/2;
     int y_0 = (WND_H - game->height * dim[1]/GAME_BOX_SPRITE_NUM_ROWS)/2;
     int i;
-    struct sprite* sprite;
     for(i = 0; i < GAME_BOARD_H * GAME_BOARD_W; i++) {
-        sprite = sprite_create(ss, PLAYER_NONE * GAME_BOX_SPRITE_NUM_COLS,
-                x_0 + //x_0 + x_pos_in_grid * box_width
-                ((i - i/GAME_BOARD_H*GAME_BOARD_W) * dim[0]/GAME_BOX_SPRITE_NUM_COLS),
-                y_0 + //y_0 + y_pos_in_grid * box_heigth
-                ((i/GAME_BOARD_H) * dim[1]/GAME_BOX_SPRITE_NUM_ROWS),
-                dim[0], dim[1]);
-        if(sprite == NULL)
-            return 0;
         game->grid[i] = box_create(i - i/GAME_BOARD_W,
-                i/GAME_BOARD_W, PLAYER_NONE, 0, sprite);
+                i/GAME_BOARD_W, PLAYER_NONE, 0, 
+                box_sprite_create(ss, i, x_0, y_0, dim));
         if(game->grid[i] == NULL)
             return 0;
     }
@@ -191,6 +197,10 @@ int fill_grid(struct game* game, struct spritesheet* ss) {
 
 struct box* box_create(int x, int y, enum player owner, 
         int points, struct sprite* sprite) {
+    if(sprite == NULL) {
+        printf("game.c::box_create: sprite is NULL\n");
+        return NULL;
+    }
     struct box* box = malloc(sizeof(struct box));
     if(box == NULL) {
         printf(ERR_MSG_ALLOC, "struct box");
@@ -205,6 +215,21 @@ struct box* box_create(int x, int y, enum player owner,
     return box;
 }
 
+struct sprite* box_sprite_create(struct spritesheet* ss,
+        int i, int x_0, int y_0, unsigned int dim[2]) {
+    struct sprite* sprite;
+    if(dim != NULL) {
+        int sprite_pos = PLAYER_NONE * GAME_BOX_SPRITE_NUM_COLS;
+        int x_pos_in_grid = (i - i/GAME_BOARD_H*GAME_BOARD_W);
+        int y_pos_in_grid = (i/GAME_BOARD_H);
+        int box_width = dim[0]/GAME_BOX_SPRITE_NUM_COLS;
+        int box_height = dim[1]/GAME_BOX_SPRITE_NUM_ROWS;
+        int x = x_0 + x_pos_in_grid * box_width;
+        int y = y_0 + y_pos_in_grid * box_height;
+        sprite = sprite_create(ss, sprite_pos, x, y, dim[0], dim[1]);
+    } else printf("game.c::box_sprite_create: dims is NULL\n");
+    return sprite;
+}
 
 void game_run(struct game* game) {
     if(game != NULL) {
