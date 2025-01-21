@@ -14,25 +14,47 @@
 //Fills game, return 1 if worked, 0 otherwise
 int game_fill(struct game* game, SDL_Renderer* renderer, int width,
         int height, int players_nb, int bots_nb);
+
 //Loads gameover sprite, return 1 if worked, 0 otherwise
 int load_gameover(struct game* game, SDL_Renderer* renderer);
+
 //Initialize the game grid. Returns 1 if worked, -1 if game was NULL, 0
 //otherwise
 int init_grid(struct game* game); 
+
+//Fills the game grid with empty boxes. That is, a sprite of an empty box,
+//without points and with PLAYER_NONE.
+//Returns 1 if it went well, 0 otherwise 
 int fill_grid(struct game* game, struct spritesheet* spritesheet); 
+
+//Creates an empty box. That is, a sprite of an empty box,
+//without points and with PLAYER_NONE.
 struct box* box_create(int x, int y, enum player owner, 
         int points, struct sprite* sprite);
-void box_free(struct box* box);
-
 
 //Game run functions
 //==========================================================
 void event_loop(struct game* game);
+
+//Handles a left mouse click
 void game_click(struct game* game);
+
+//Checks if a box of the game's grid is hovered
+//Returns The index of the box in the grid or -1 if mouse ins't hovering one
 int find_box_hovered(struct game* game);
+
+//Updates the game's grid by adding a point to box at box_index and calculating
+//it's impact on other boxes
 void update_grid(struct game* game, int box_index);
+
+//Updates a box sprite to get the good position
 void update_box_sprite(struct box* box);
+
+//Sets game to next turn
 void next_player(struct game* game);
+
+//Explodes boxes in box_indexes before recursively calling itself on the
+//new boxes with four points
 void explode_boxes(struct game* game, int* boxes_indexes, int box_count);
 
 //Explodes a box of the game and increases next_boxes_count by the number
@@ -45,11 +67,27 @@ void explode_box(struct game* game, int box_index,
 //reached, then it is added to next_boxes_indexes and it increases the counter.
 void update_box_from_collision(struct game* game, int box_index,
         int* next_boxes_indexes, int* next_boxes_count); 
+
+//Resets a box to the state of an empty box. That is, a sprite of an empty box,
+//without points and with PLAYER_NONE.
 void box_reset(struct box* box);
+
+//Checks if game ended. Returns 1 if yes and 0 if no or if there was an error
 int game_ended(struct game* game);
+
 void game_render(struct game* game);
+
+//Sets `r` `g` and `b` that represent the game color 
 void game_set_background_color(struct game* game, Uint8* r, Uint8* g, Uint8* b);
+
 int game_render_grid(struct game* game);
+
+//Game delete functions
+//==========================================================
+//Frees a box
+void box_free(struct box* box);
+
+
 
 struct game* game_create(int width, int height, int players_nb, 
         int bots_nb, SDL_Renderer* renderer) {
